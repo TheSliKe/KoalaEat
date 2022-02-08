@@ -2,16 +2,31 @@
 
 {% block title %}Register{% endblock %}
 
+{% block customstylesheets %}
+    <link rel="stylesheet" type="text/css" href="css/back.css" media="all"/>
+{% endblock %}
+
 {% block body %}
-    <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+<div class="card mx-auto" style="width: 18rem; margin-top: 10%">
+    <div class="card-body">
+        <h5 class="card-title">Inscription</h5>
+        {{ form_start(registrationForm) }}
+            <div class="mb-3">
+                {{ form_row(registrationForm.email) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Mot de passe'
+                }) }}
+            </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            {{ form_row(registrationForm.agreeTerms) }}
+           
+            <button type="submit" class="btn btn-dark">S'inscrire</button>
+            <button type="button" onclick='window.location.href = "/login"' class="btn btn-light">Se connecter</button>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+
 {% endblock %}

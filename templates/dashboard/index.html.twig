@@ -2,6 +2,14 @@
 
 {% block title %}Hello DashboardController!{% endblock %}
 
+{% block navbaritems %}
+
+    <form>
+        <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
+    </form>
+
+{% endblock %}
+
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
@@ -17,4 +25,5 @@
         <li>Your template at <code><a href="{{ 'C:/Users/Quentin/Desktop/KoalaEat/ProjetV2/KoalaEat/templates/dashboard/index.html.twig'|file_link(0) }}">templates/dashboard/index.html.twig</a></code></li>
     </ul>
 </div>
+
 {% endblock %}
