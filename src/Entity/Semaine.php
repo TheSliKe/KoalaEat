@@ -40,7 +40,7 @@ class Semaine
     {
         $this->SEM_Libelle = $SEM_Libelle;
 
-        return $this;
+        return $this->SEM_Libelle;
     }
 
     /**
@@ -71,5 +71,9 @@ class Semaine
         }
 
         return $this;
+    }
+
+    public function __toString(){
+        return $this->SEM_Libelle;
     }
 }
