@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Restaurateur;
 use App\Entity\Restaurant;
+use App\Entity\HoraireRestaurant;
 use App\Form\ProfilRestaurateurFormType;
 use App\Form\CreerRestaurantType;
+use App\Form\RestaurantHoraireType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,16 +22,19 @@ class ProfilRestaurateurController extends AbstractController
         
         $restaurateur = new Restaurateur();
         $restaurant = new Restaurant();
-
+        $HoraireRestaurant = new HoraireRestaurant();
         $form = $this->createForm(ProfilRestaurateurFormType::class, $restaurateur);
         $form2 = $this->createForm(CreerRestaurantType::class, $restaurant);
+        $form3 = $this->createForm(RestaurantHoraireType::class, $HoraireRestaurant);
         $form->handleRequest($request);
         $form2->handleRequest($request);
-
-        $restaurateurName = "FRUGRE";
-        $restaurateurPrenom = "MICHEL";
-        $restaurateurMail = "J.M@JAIME.GEMO";
-        $restaurateurTel = "0669696969";
+        $form3->handleRequest($request);
+        
+        $restaurateurName = $restaurateur->getRESNom();
+        $restaurateurPrenom = $restaurateur->getRESPrenom();
+        $restaurateurMail = $restaurateur->getRESMail();
+        $restaurateurTel = $restaurateur->getRESTelephone();
+        $restaurateurAdresse = $restaurateur->getRESAdresse();
         
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($restaurateur);
@@ -38,10 +43,12 @@ class ProfilRestaurateurController extends AbstractController
         return $this->render('profil_restaurateur/index.html.twig', [
             'ProfilRestaurateurForm' => $form->createView(), 
             'CreerRestaurantType' => $form2->createView(),
+            'RestaurantHoraireType' => $form3->createView(),
             'restaurateurName' => $restaurateurName, 
             'restaurateurPrenom' => $restaurateurPrenom, 
             'restaurateurMail' => $restaurateurMail, 
-            'restaurateurTel' => $restaurateurTel
+            'restaurateurTel' => $restaurateurTel,
+            'restaurateurAdresse' => $restaurateurAdresse
         ]);
     }
 }

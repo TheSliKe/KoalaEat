@@ -20,6 +20,10 @@
             value : restaurateurTel,
             label : "Numéro de téléphone"
         }) }}
+        {{ form_row(ProfilRestaurateurForm.RES_adresse, {
+            value : restaurateurAdresse,
+            label : "Adresse"
+        }) }}
 
         <button type="submit" class="btn">Register</button>
     {{ form_end(ProfilRestaurateurForm) }}
@@ -69,4 +73,23 @@
 
 
 
+
+    {{ form_start(RestaurantHoraireType) }}
+        {{form_row(RestaurantHoraireType.horaireDebutMidi, {
+            label : "Horaire d'ouverture midi"
+        })}}
+        {{form_row(RestaurantHoraireType.horaireFinMidi, {
+            label : "Horaire de fermeture midi"
+        })}}
+        {{form_row(RestaurantHoraireType.horaireDebutSoir, {
+            label : "Horaire d'ouverture soir"
+        })}}
+        {{form_row(RestaurantHoraireType.horaireFinSoir, {
+            label : "Horaire de fermeture soir"
+        })}}        
+        {{form_row(RestaurantHoraireType.FK_SEM, {
+            label : "jour "
+        })}}        
+        <button type="submit" class="btn">Ajouter</button>
+    {{ form_end(RestaurantHoraireType) }}
 {% endblock %}
