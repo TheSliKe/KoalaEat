@@ -30,11 +30,15 @@ class Plat
     #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'FK_PA')]
     private $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'FK_PA', targetEntity: Compose::class)]
+    private $composes;
+
 
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
         $this->commandePlats = new ArrayCollection();
+        $this->composes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +116,36 @@ class Plat
     {
         if ($this->commandes->removeElement($commande)) {
             $commande->removeFKPA($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Compose[]
+     */
+    public function getComposes(): Collection
+    {
+        return $this->composes;
+    }
+
+    public function addCompose(Compose $compose): self
+    {
+        if (!$this->composes->contains($compose)) {
+            $this->composes[] = $compose;
+            $compose->setFKPA($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompose(Compose $compose): self
+    {
+        if ($this->composes->removeElement($compose)) {
+            // set the owning side to null (unless already changed)
+            if ($compose->getFKPA() === $this) {
+                $compose->setFKPA(null);
+            }
         }
 
         return $this;
