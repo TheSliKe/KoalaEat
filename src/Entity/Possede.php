@@ -13,7 +13,7 @@ class Possede
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'datetime')]
     private $PO_date;
 
     #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'possedes')]
