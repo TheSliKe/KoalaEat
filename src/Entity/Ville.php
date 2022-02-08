@@ -127,3 +127,7 @@ class Ville
         return $this->VI_Libelle;
     }
 }
+    public function __toString(){
+        return $this->VI_Libelle;
+    }
+}
