@@ -27,9 +27,6 @@ class Plat
     #[ORM\ManyToOne(targetEntity: Restaurant::class, inversedBy: 'plats')]
     private $FK_RE;
 
-    #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'FK_PA')]
-    private $commandes;
-
     #[ORM\OneToMany(mappedBy: 'FK_PA', targetEntity: Compose::class)]
     private $composes;
 
