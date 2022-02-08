@@ -21,6 +21,10 @@
                 }) }}
             </div>
 
+             {{ form_row(registrationForm.accountType, {
+                    label: 'Type de compte'
+                }) }}
+
             {{ form_row(registrationForm.agreeTerms) }}
            
             <button type="submit" class="btn btn-dark">S'inscrire</button>
