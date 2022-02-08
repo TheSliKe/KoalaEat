@@ -18,14 +18,18 @@ class Commande
     #[ORM\Column(type: 'string', length: 255)]
     private $CO_AdresseDeLivraison;
 
-    #[ORM\ManyToMany(targetEntity: Plat::class, inversedBy: 'commandes')]
-    private $FK_PA;
-
     #[ORM\OneToMany(mappedBy: 'FK_CO', targetEntity: Compose::class)]
     private $composes;
 
     #[ORM\OneToMany(mappedBy: 'FK_CO', targetEntity: Possede::class)]
     private $possedes;
+
+    #[ORM\ManyToOne(targetEntity: Livreur::class, inversedBy: 'commandes')]
+    private $FK_LI;
+
+    #[ORM\ManyToOne(targetEntity: Client::class, inversedBy: 'commandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $FK_CL;
 
     public function __construct()
     {
@@ -132,6 +136,30 @@ class Commande
                 $possede->setFKCO(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFKLI(): ?Livreur
+    {
+        return $this->FK_LI;
+    }
+
+    public function setFKLI(?Livreur $FK_LI): self
+    {
+        $this->FK_LI = $FK_LI;
+
+        return $this;
+    }
+
+    public function getFKCL(): ?Client
+    {
+        return $this->FK_CL;
+    }
+
+    public function setFKCL(?Client $FK_CL): self
+    {
+        $this->FK_CL = $FK_CL;
 
         return $this;
     }

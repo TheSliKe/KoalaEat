@@ -30,6 +30,9 @@ class Restaurateur
     #[ORM\OneToMany(mappedBy: 'FK_RES_id', targetEntity: Restaurant::class)]
     private $restaurants;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $RES_adresse;
+
     public function __construct()
     {
         $this->restaurants = new ArrayCollection();
@@ -114,6 +117,18 @@ class Restaurateur
                 $restaurant->setFKRESId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRESAdresse(): ?string
+    {
+        return $this->RES_adresse;
+    }
+
+    public function setRESAdresse(string $RES_adresse): self
+    {
+        $this->RES_adresse = $RES_adresse;
 
         return $this;
     }
