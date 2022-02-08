@@ -33,7 +33,18 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_login');
+            $accountType = $form->get('accountType')->getData();
+
+            if ($accountType == 1) {
+                return $this->redirectToRoute('profil_client');
+            } elseif ($accountType == 2) {
+                return $this->redirectToRoute('profil_restaurateur');
+            } elseif ($accountType == 3) {
+                return $this->redirectToRoute('profil_livreur');
+            } else {
+                return $this->redirectToRoute('app_register');
+            }
+
         }
 
         return $this->render('registration/register.html.twig', [

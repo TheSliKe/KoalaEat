@@ -49,8 +49,20 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('dashboard'));
+        /** @var User $user */
+        $user = $token->getUser();
+
+        if($user->getAccountType() == 1){
+            return new RedirectResponse($this->urlGenerator->generate('profil_client'));
+        } elseif ($user->getAccountType() == 2) {
+            return new RedirectResponse($this->urlGenerator->generate('profil_restaurateur'));
+        } elseif ($user->getAccountType() == 3) {
+            return new RedirectResponse($this->urlGenerator->generate('profil_livreur'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
+        }
+
+       
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
