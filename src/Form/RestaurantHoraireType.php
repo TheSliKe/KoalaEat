@@ -16,7 +16,6 @@ class RestaurantHoraireType extends AbstractType
             ->add('horaireFinMidi')
             ->add('horaireDebutSoir')
             ->add('horaireFinSoir')
-            ->add('FK_RE')
             ->add('FK_SEM')
         ;
     }
