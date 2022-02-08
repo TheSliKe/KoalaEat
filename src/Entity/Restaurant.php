@@ -34,10 +34,14 @@ class Restaurant
     #[ORM\OneToMany(mappedBy: 'FK_RE', targetEntity: Plat::class)]
     private $plats;
 
+    #[ORM\OneToMany(mappedBy: 'FK_RE', targetEntity: HoraireRestaurant::class)]
+    private $horaireRestaurants;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->plats = new ArrayCollection();
+        $this->horaireRestaurants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +148,36 @@ class Restaurant
             // set the owning side to null (unless already changed)
             if ($plat->getFKRE() === $this) {
                 $plat->setFKRE(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HoraireRestaurant[]
+     */
+    public function getHoraireRestaurants(): Collection
+    {
+        return $this->horaireRestaurants;
+    }
+
+    public function addHoraireRestaurant(HoraireRestaurant $horaireRestaurant): self
+    {
+        if (!$this->horaireRestaurants->contains($horaireRestaurant)) {
+            $this->horaireRestaurants[] = $horaireRestaurant;
+            $horaireRestaurant->setFKRE($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHoraireRestaurant(HoraireRestaurant $horaireRestaurant): self
+    {
+        if ($this->horaireRestaurants->removeElement($horaireRestaurant)) {
+            // set the owning side to null (unless already changed)
+            if ($horaireRestaurant->getFKRE() === $this) {
+                $horaireRestaurant->setFKRE(null);
             }
         }
 
