@@ -15,13 +15,13 @@ class Livreur
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable:true)]
     private $LI_Nom;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable:true)]
     private $LI_Prenom;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable:true)]
     private $LI_Telephone;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -35,6 +35,10 @@ class Livreur
 
     #[ORM\ManyToOne(targetEntity: Ville::class, inversedBy: 'livreurs')]
     private $FK_VI;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'livreurs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $FK_US;
 
     public function __construct()
     {
@@ -163,6 +167,18 @@ class Livreur
     public function setFKVI(?Ville $FK_VI): self
     {
         $this->FK_VI = $FK_VI;
+
+        return $this;
+    }
+
+    public function getFKUS(): ?User
+    {
+        return $this->FK_US;
+    }
+
+    public function setFKUS(?User $FK_US): self
+    {
+        $this->FK_US = $FK_US;
 
         return $this;
     }

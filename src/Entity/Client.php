@@ -15,19 +15,19 @@ class Client
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable:true)]
     private $CL_Nom;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable:true)]
     private $CL_Prenom;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable:true)]
     private $CL_Telephone;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $CL_Mail;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable:true)]
     private $CL_Adresse;
 
     #[ORM\ManyToOne(targetEntity: Ville::class, inversedBy: 'clients')]
@@ -35,6 +35,10 @@ class Client
 
     #[ORM\OneToMany(mappedBy: 'FK_CL', targetEntity: Commande::class)]
     private $commandes;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'clients')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $FK_US;
 
     public function __construct()
     {
@@ -144,6 +148,18 @@ class Client
                 $commande->setFKCL(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFKUS(): ?User
+    {
+        return $this->FK_US;
+    }
+
+    public function setFKUS(?User $FK_US): self
+    {
+        $this->FK_US = $FK_US;
 
         return $this;
     }

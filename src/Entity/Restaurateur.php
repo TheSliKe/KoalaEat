@@ -15,13 +15,13 @@ class Restaurateur
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable:true)]
     private $RES_Nom;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable:true)]
     private $RES_Prenom;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable:true)]
     private $RES_Telephone;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -32,6 +32,10 @@ class Restaurateur
 
     #[ORM\Column(type: 'string', length: 255)]
     private $RES_adresse;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'restaurateurs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $FK_US;
 
     public function __construct()
     {
@@ -129,6 +133,18 @@ class Restaurateur
     public function setRESAdresse(string $RES_adresse): self
     {
         $this->RES_adresse = $RES_adresse;
+
+        return $this;
+    }
+
+    public function getFKUS(): ?User
+    {
+        return $this->FK_US;
+    }
+
+    public function setFKUS(?User $FK_US): self
+    {
+        $this->FK_US = $FK_US;
 
         return $this;
     }
