@@ -25,10 +25,14 @@ security:
         path: app_logout
         # where to redirect after logout
 <<<<<<< HEAD
+<<<<<<< HEAD
         target: app_login
 =======
         # target: login
 >>>>>>> 47874a6 (ajout du control_access)
+=======
+        target: app_login
+>>>>>>> fa49bc2 (Création du formulaire de profil restaurateur. :))
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
@@ -40,6 +44,7 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/dashboard$, roles: ROLE_USER }
+    - { path: ^/profil/restaurateur$, roles: ROLE_USER }
     # - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     # - { path: ^/register$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 when@test:

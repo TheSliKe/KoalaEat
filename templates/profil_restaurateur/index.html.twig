@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil Restaurateur{% endblock %}
+
+{% block body %}
+    {{ form_start(ProfilRestaurateurForm) }}
+        {{ form_row(ProfilRestaurateurForm.RES_Nom, {
+            value : restaurateurName,
+            label : "Votre nom"
+        }) }}
+        {{ form_row(ProfilRestaurateurForm.RES_Prenom, {
+            value : restaurateurPrenom,
+            label : "Votre prénom:"
+        }) }}
+        {{ form_row(ProfilRestaurateurForm.RES_Mail, {
+            value : restaurateurMail,
+            label : "Votre mail"
+        }) }}
+        {{ form_row(ProfilRestaurateurForm.RES_Telephone, {
+            value : restaurateurTel,
+            label : "Numéro de téléphone"
+        }) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(ProfilRestaurateurForm) }}
+   
+    {{ form_start(CreerRestaurantType) }}
+        {{form_row(CreerRestaurantType.RE_Libelle, {
+            label : "Nom du restaurant"
+        })}}        
+        {{form_row(CreerRestaurantType.RE_Adresse, {
+            label : "Adresse du restaurant"
+        })}}
+        {{form_row(CreerRestaurantType.FK_VI_id, {
+            label : "Ville"
+        })}}
+        {{form_row(CreerRestaurantType.categories, {
+            label : "Categories"
+        })}}
+        <button type="submit" class="btn">Ajouter</button>
+    {{ form_end(CreerRestaurantType) }}
+    {# <div class="restaurants">
+        Ajouter un restaurant: <br>
+        <label>Nom du restaurant</label>
+        <input type="text" name="nomRestaurant" id=""><br>
+        <label>Adresse dy restaurant</label>
+        <input type="text" name="adresseRestaurant" id=""><br>
+        <label>Ville du restaurant</label>
+        <select name="villeRestaurant" id="">
+        </select><br>
+        <input type="button" value="Ajouter"><br>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td>Nom du restaurant</td>
+                <td>Adresse du restaurant</td>
+                <td>Ville du restaurant</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table> #}
+
+
+
+{% endblock %}
