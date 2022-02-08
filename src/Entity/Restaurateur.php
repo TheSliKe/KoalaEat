@@ -30,7 +30,7 @@ class Restaurateur
     #[ORM\OneToMany(mappedBy: 'FK_RES_id', targetEntity: Restaurant::class)]
     private $restaurants;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $RES_adresse;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'restaurateurs')]
