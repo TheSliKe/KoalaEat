@@ -29,6 +29,9 @@ class HoraireRestaurant
     #[ORM\JoinColumn(nullable: false)]
     private $FK_RE;
 
+    #[ORM\ManyToOne(targetEntity: Semaine::class, inversedBy: 'horaireRestaurants')]
+    private $FK_SEM;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class HoraireRestaurant
     public function setFKRE(?Restaurant $FK_RE): self
     {
         $this->FK_RE = $FK_RE;
+
+        return $this;
+    }
+
+    public function getFKSEM(): ?Semaine
+    {
+        return $this->FK_SEM;
+    }
+
+    public function setFKSEM(?Semaine $FK_SEM): self
+    {
+        $this->FK_SEM = $FK_SEM;
 
         return $this;
     }
