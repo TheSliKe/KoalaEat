@@ -35,11 +35,19 @@
             "ref": "f98f1affe028f8153a459d15f220ada3826b5aa2"
         },
         "files": [
+<<<<<<< HEAD
             "./config/packages/doctrine.yaml",
             "./config/packages/prod/doctrine.yaml",
             "./config/packages/test/doctrine.yaml",
             "./src/Entity/.gitignore",
             "./src/Repository/.gitignore"
+=======
+            "config/packages/doctrine.yaml",
+            "config/packages/prod/doctrine.yaml",
+            "config/packages/test/doctrine.yaml",
+            "src/Entity/.gitignore",
+            "src/Repository/.gitignore"
+>>>>>>> feature/bddRestaurant
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -51,8 +59,13 @@
             "ref": "ee609429c9ee23e22d6fa5728211768f51ed2818"
         },
         "files": [
+<<<<<<< HEAD
             "./config/packages/doctrine_migrations.yaml",
             "./migrations/.gitignore"
+=======
+            "config/packages/doctrine_migrations.yaml",
+            "migrations/.gitignore"
+>>>>>>> feature/bddRestaurant
         ]
     },
     "doctrine/event-manager": {
@@ -197,12 +210,15 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+<<<<<<< HEAD
     "symfony/options-resolver": {
         "version": "v6.0.3"
     },
     "symfony/password-hasher": {
         "version": "v6.0.3"
     },
+=======
+>>>>>>> feature/bddRestaurant
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.24.0"
     },
@@ -218,12 +234,15 @@
     "symfony/polyfill-php81": {
         "version": "v1.24.0"
     },
+<<<<<<< HEAD
     "symfony/property-access": {
         "version": "v6.0.3"
     },
     "symfony/property-info": {
         "version": "v6.0.3"
     },
+=======
+>>>>>>> feature/bddRestaurant
     "symfony/proxy-manager-bridge": {
         "version": "v6.0.3"
     },
