@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Client
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: "NONE")]
     #[ORM\Column(type: 'integer')]
     private $id;
 
