@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil Restaurateur{% endblock %}
+{% block title %}Edition du Restaurant{% endblock %}
 
 {% block navbaritems %}
 
@@ -22,31 +22,7 @@
 {% endfor %} #}
 
 
-<div class="card mx-auto" style="width: 90rem; margin-top : 15px">
-  <div class="card-body">
-    <h5 class="card-title">Profil du Restaurateur</h5>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-     
-                    {{ form_start(ProfilRestaurateurForm) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_Nom, { label : "Votre nom" }) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_Prenom, { label : "Votre prénom:" }) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_Mail, { label : "Votre mail" }) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_Telephone, { label : "Numéro de téléphone" }) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_adresse, { label : "Adresse" }) }}
-                        
-                        <button type="submit" class="btn btn-dark">Sauvegarder</button>
-                    {{ form_end(ProfilRestaurateurForm) }}
 
-                </div>
-                <div class="col">
-                </div>
-
-            </div>
-        </div>
-  </div>
-</div>
 
 
 <ul class="nav nav-tabs justify-content-center">
@@ -54,7 +30,7 @@
         <a href="#tab1" class="nav-link active" data-bs-toggle="tab">restemp</a>
     </li>
     <li class="nav-item">
-        <a  class="nav-link" data-bs-toggle="tab" onclick = 'window.location.href = "/profil/restaurateur/restaurant"'>Ajouter un restaurant</a>
+        <a href="#tab2" class="nav-link" data-bs-toggle="tab">Ajouter un restaurant</a>
     </li>
    
 </ul>
@@ -130,26 +106,25 @@
             <div class="row">
                 <div class="col">
                 
-                
-                    {# {{ form_start(RestaurantHoraireType) }}
+                    {{ form_start(RestaurantHoraireType) }}
                         {{form_row(RestaurantHoraireType.horaireDebutMidi, { label : "Horaire d'ouverture midi" })}}
                         {{form_row(RestaurantHoraireType.horaireFinMidi, { label : "Horaire de fermeture midi" })}}
                         {{form_row(RestaurantHoraireType.horaireDebutSoir, { label : "Horaire d'ouverture soir" })}}
                         {{form_row(RestaurantHoraireType.horaireFinSoir, { label : "Horaire de fermeture soir" })}}        
                         {{form_row(RestaurantHoraireType.FK_SEM, { label : "jour " })}}        
                         <button type="submit" class="btn btn-dark">Sauvegarder</button>
-                    {{ form_end(RestaurantHoraireType) }} #}
+                    {{ form_end(RestaurantHoraireType) }}
                    
                 </div>
                 <div class="col">
 
-                    {# {{ form_start(CreerRestaurantType) }}
+                    {{ form_start(CreerRestaurantType) }}
                         {{form_row(CreerRestaurantType.RE_Libelle, { label : "Nom du restaurant" })}}        
                         {{form_row(CreerRestaurantType.RE_Adresse, { label : "Adresse du restaurant" })}}
                         {{form_row(CreerRestaurantType.FK_VI_id, { label : "Ville" })}}
                         {{form_row(CreerRestaurantType.categories, { label : "Categories" })}}
                         <button type="submit" class="btn btn-dark">Sauvegarder</button>
-                    {{ form_end(CreerRestaurantType) }} #}
+                    {{ form_end(CreerRestaurantType) }}
 
                 </div>
             </div>
