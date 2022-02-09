@@ -200,6 +200,9 @@
     "symfony/http-kernel": {
         "version": "v6.0.4"
     },
+    "symfony/intl": {
+        "version": "v6.0.3"
+    },
     "symfony/maker-bundle": {
         "version": "1.36",
         "recipe": {
@@ -342,6 +345,12 @@
     },
     "symfonycasts/verify-email-bundle": {
         "version": "v1.8.0"
+    },
+    "twig/extra-bundle": {
+        "version": "v3.3.8"
+    },
+    "twig/intl-extra": {
+        "version": "v3.3.5"
     },
     "twig/twig": {
         "version": "v3.3.8"
