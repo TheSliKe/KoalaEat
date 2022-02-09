@@ -13,16 +13,16 @@ class HoraireRestaurant
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'time', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $horaireDebutMidi;
 
-    #[ORM\Column(type: 'time', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $horaireFinMidi;
 
-    #[ORM\Column(type: 'time', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $horaireDebutSoir;
 
-    #[ORM\Column(type: 'time', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $horaireFinSoir;
 
     #[ORM\ManyToOne(targetEntity: Restaurant::class, inversedBy: 'horaireRestaurants')]

@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition du Restaurant partie 2{% endblock %}
+
+
+{% block navbaritems %}
+
+    <div class="navbar-nav">
+        <a class="nav-link active" href="/dashboard/restaurateur">Dashboard</a>
+        <a class="nav-link" href="/profil/restaurateur">Profil</a>
+    </div>
+
+    <form>
+        <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
+    </form>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="card mx-auto mt-3" style="width: 60rem;">
+  <div class="card-body">
+    <h5 class="card-title">Ajouter les horaires de votre restaurant</h5>
+   
+    <form method="post">
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Jours</th>
+                    <th scope="col">Horaire Midi</th>
+                    <th scope="col">Horaire Soir</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <th scope="row">lundi</th>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="lundi-start-midi" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="lundi-stop-midi" aria-label="Fermeture">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="lundi-start-soir" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="lundi-stop-soir" aria-label="Fermeture">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">mardi</th>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="mardi-start-midi" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="mardi-stop-midi" aria-label="Fermeture">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="mardi-start-soir" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="mardi-stop-soir" aria-label="Fermeture">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">mercredi</th>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="mercredi-start-midi" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="mercredi-stop-midi" aria-label="Fermeture">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="mercredi-start-soir" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="mercredi-stop-soir" aria-label="Fermeture">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">jeudi</th>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="jeudi-start-midi" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="jeudi-stop-midi" aria-label="Fermeture">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="jeudi-start-soir" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="jeudi-stop-soir" aria-label="Fermeture">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">vendredi</th>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="vendredi-start-midi" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="vendredi-stop-midi" aria-label="Fermeture">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="vendredi-start-soir" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="vendredi-stop-soir" aria-label="Fermeture">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">samedi</th>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="samedi-start-midi" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="samedi-stop-midi" aria-label="Fermeture">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="samedi-start-soir" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="samedi-stop-soir" aria-label="Fermeture">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">dimanche</th>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="dimanche-start-midi" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="dimanche-stop-midi" aria-label="Fermeture">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" name="dimanche-start-soir" aria-label="Ouverture">
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" name="dimanche-stop-soir" aria-label="Fermeture">
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-dark">Sauvegarder</button>
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
