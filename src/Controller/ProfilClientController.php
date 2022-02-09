@@ -14,5 +14,6 @@ class ProfilClientController extends AbstractController
         return $this->render('profil_client/index.html.twig', [
             'controller_name' => 'ProfilClientController',
         ]);
+
     }
 }

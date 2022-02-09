@@ -19,7 +19,7 @@ class ProfilRestaurateurController extends AbstractController
     #[Route('/profil/restaurateur', name: 'profil_restaurateur')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        
+    
         $restaurateur = new Restaurateur();
         $restaurant = new Restaurant();
         $HoraireRestaurant = new HoraireRestaurant();

@@ -55,7 +55,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         if($user->getAccountType() == 1){
             return new RedirectResponse($this->urlGenerator->generate('profil_client'));
         } elseif ($user->getAccountType() == 2) {
-            return new RedirectResponse($this->urlGenerator->generate('profil_restaurateur'));
+            return new RedirectResponse($this->urlGenerator->generate('dashboard_restaurateur'));
         } elseif ($user->getAccountType() == 3) {
             return new RedirectResponse($this->urlGenerator->generate('profil_livreur'));
         } else {
