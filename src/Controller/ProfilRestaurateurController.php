@@ -102,7 +102,6 @@ class ProfilRestaurateurController extends AbstractController
             $lundiStopMidi = $request->request->get('lundi-stop-midi');
             $lundiStartSoir = $request->request->get('lundi-start-soir');
             $lundiStopSoir = $request->request->get('lundi-stop-soir');
-dump($lundiStartMidi);
 
             $mardiStartMidi = $request->request->get('mardi-start-midi');
             $mardiStopMidi = $request->request->get('mardi-stop-midi');
@@ -198,6 +197,8 @@ dump($lundiStartMidi);
             
             $entityManager->persist($horaireRestaurantdimanche);
             $entityManager->flush();
+
+            return $this->redirectToRoute('profil_restaurateur');
 
         }
         

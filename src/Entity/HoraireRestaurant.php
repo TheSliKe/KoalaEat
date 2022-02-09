@@ -37,48 +37,48 @@ class HoraireRestaurant
         return $this->id;
     }
 
-    public function getHoraireDebutMidi(): ?\DateTimeInterface
+    public function getHoraireDebutMidi(): ?string
     {
         return $this->horaireDebutMidi;
     }
 
-    public function setHoraireDebutMidi(?\DateTimeInterface $horaireDebutMidi): self
+    public function setHoraireDebutMidi(?string $horaireDebutMidi): self
     {
         $this->horaireDebutMidi = $horaireDebutMidi;
 
         return $this;
     }
 
-    public function getHoraireFinMidi(): ?\DateTimeInterface
+    public function getHoraireFinMidi(): ?string
     {
         return $this->horaireFinMidi;
     }
 
-    public function setHoraireFinMidi(?\DateTimeInterface $horaireFinMidi): self
+    public function setHoraireFinMidi(?string $horaireFinMidi): self
     {
         $this->horaireFinMidi = $horaireFinMidi;
 
         return $this;
     }
 
-    public function getHoraireDebutSoir(): ?\DateTimeInterface
+    public function getHoraireDebutSoir(): ?string
     {
         return $this->horaireDebutSoir;
     }
 
-    public function setHoraireDebutSoir(?\DateTimeInterface $horaireDebutSoir): self
+    public function setHoraireDebutSoir(?string $horaireDebutSoir): self
     {
         $this->horaireDebutSoir = $horaireDebutSoir;
 
         return $this;
     }
 
-    public function getHoraireFinSoir(): ?\DateTimeInterface
+    public function getHoraireFinSoir(): ?string
     {
         return $this->horaireFinSoir;
     }
 
-    public function setHoraireFinSoir(?\DateTimeInterface $horaireFinSoir): self
+    public function setHoraireFinSoir(?string $horaireFinSoir): self
     {
         $this->horaireFinSoir = $horaireFinSoir;
 
