@@ -13,25 +13,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Repository\RestaurateurRepository;
 
 class ProfilRestaurateurController extends AbstractController
 {
     #[Route('/profil/restaurateur', name: 'profil_restaurateur')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // $user_id = $this->getUser();
-        
-        // $query = $entityManager->createQuery(
-        //             'SELECT p.id
-        //             FROM App\Entity\Restaurateur p
-        //             WHERE p.id = :id'
-        // )->setParameter('id', $user_id);
-        //   $query->getResult()
-        // $restaurateur = $entityManager->getRepository(Restaurateur::class)->find(2);
-        $restaurateur = $entityManager->find(Restaurateur::class, 1);
-        // $restaurateur = $this->getDoctrine()->getRepository(Article::class)->find(2);
+        $user_id = $this->getUser();
+        echo $user_id;
 
+        $repository = $entityManager->getRepository(Restaurateur::class);
+        $restaurateur = $repository->findOneBy(['FK_US' => $user_id]);
 
         $restaurant = new Restaurant();
         $HoraireRestaurant = new HoraireRestaurant();
