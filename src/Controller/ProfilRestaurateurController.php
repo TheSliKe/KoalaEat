@@ -32,6 +32,8 @@ class ProfilRestaurateurController extends AbstractController
         $restaurateur = $entityManager->find(Restaurateur::class, 1);
         // $restaurateur = $this->getDoctrine()->getRepository(Article::class)->find(2);
 
+       
+
 
         $restaurant = new Restaurant();
         $HoraireRestaurant = new HoraireRestaurant();
