@@ -19,6 +19,7 @@ class RestaurantRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurant::class);
     }
 
+    
     // /**
     //  * @return Restaurant[] Returns an array of Restaurant objects
     //  */

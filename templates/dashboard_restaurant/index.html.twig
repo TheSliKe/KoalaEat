@@ -5,7 +5,7 @@
 {% block customstylesheets %}
     <style>
         body {
-            background-image: url('../images/backRest.jpg');
+            background-image: url('../../images/backRest.jpg');
             background-size: cover;
         }
     </style>
@@ -42,23 +42,28 @@
                                 <th scope="col">Plat</th>
                                 <th scope="col">Prix</th>
                                 <th scope="col">Stock</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Supprimer</th>
+                                <th scope="col">Détails</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for plat in plats %}
                             <tr>
-                                <th scope="row">poulets</th>
-                                <td>8</td>
-                                <td>12</td>
+                                <th scope="row">{{ plat.getPALibelle() }}</th>
+                                <td>{{ plat.getPAPrix() }}</td>
+                                <td>{{ plat.getPAStock() }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-secondary">Edit</button>
-                                    <button type="button" class="btn btn-outline-danger">Supp</button>
+                                    <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deletePlatModal{{plat.id}}">Supprimer</button>
                                 </td>
-                            </tr>                        
+                                <td>
+                                    <button type="button" class="btn btn-outline-secondary" onclick='window.location.href="/dashboard/restaurant/plat/{{ plat.getId() }}"'>Modifier</button>
+                                </td>
+                            </tr>        
+                            {% endfor %}                
                         </tbody>
                     </table>
                     
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#addPlatModal" class="btn btn-outline-primary mt-auto" style="margin-bottom: 2px">Ajouter</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#addPlatModal" class="btn btn-outline-primary mt-auto" style="margin-bottom: 2px" onclick='window.location.href="/dashboard/restaurant/plat/0"'>Ajouter</button>
                    
                 </div>
             </div>
@@ -79,19 +84,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">0</th>
-                                <td>
-                                    Accepté
-                                    <button type="button" class="btn btn-outline-success">Détails</button>
-                                </td>
-                                <td><button type="button" class="btn btn-outline-secondary">Détails</button></td>
-                                <td>18H45</td>
-                            </tr>                        
+                            {% for commande in commandes %}
+                                <tr>
+                                    <th scope="row">
+                                        {{ commande.id }}
+                                    </th>
+                                    <td>
+                                        {{ commande.st_libelle }}
+                                    </td>
+                                    <td><button type="button" class="btn btn-outline-secondary" onclick='window.location.href="/detail/commande/{{ commande.id }}"'>Détails</button></td>
+                                    <td>18H45</td>
+                                </tr>      
+                            {% endfor %}                  
                         </tbody>
                     </table>
-
-
                 </div>
             </div>
         </div>
@@ -99,28 +105,25 @@
     </div>
 </div>
 
-<div class="modal fade" id="addPlatModal" tabindex="-1" aria-labelledby="addPlatModallabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPlatModallabel">Ajouter un plat</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-               {{ form_start(creerPlatType) }}
-                    {{ form_row(creerPlatType.PA_Libelle, {label : "Nom :"}) }}
-                    {{ form_row(creerPlatType.PA_Prix, {label : "Preom :"}) }}
-                    {{ form_row(creerPlatType.PA_Stock, {label : "Stock :"}) }}
-                    {{ form_row(creerPlatType.FK_RE, {label : "Restaurant :"}) }}
-               {{ form_end(creerPlatType) }}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-primary">Sauvegarder</button>
+{% for plat in plats %}
+    <div class="modal fade" id="deletePlatModal{{plat.id}}" tabindex="-1" aria-labelledby="deletePlatModallabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPlatModallabel">Supprimer un plat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                    <form action="" method="post">
+                        <input type="hidden" name="idPlat" value="{{plat.id}}">
+                        <input type="submit" value="Supprimer">
+                    </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Valider</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+{% endfor %}                  
 
 
 {% endblock %}

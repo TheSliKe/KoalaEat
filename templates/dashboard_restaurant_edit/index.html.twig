@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Restaurateur{% endblock %}
+
+{% block customstylesheets %}
+    <style>
+        body {
+            background-image: url('../../images/backRest.jpg');
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
+
+{% block navbaritems %}
+
+    <div class="navbar-nav">
+        <a class="nav-link active" href="/dashboard/restaurateur">Dashboard</a>
+        <a class="nav-link" href="/profil/restaurateur">Profil</a>
+    </div>
+    
+    <form>
+        <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
+    </form>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+               {{ form_start(creerPlatType) }}
+                    <div class="modal-body">
+                        {{ form_row(creerPlatType.PA_Libelle, {label : "Nom :"}) }}
+                        {{ form_row(creerPlatType.PA_Prix, {label : "Prix :"}) }}
+                        {{ form_row(creerPlatType.PA_Stock, {label : "Stock :"}) }}
+                        {{ form_row(creerPlatType.FK_RE, {label : "Restaurant :"}) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-dark">Sauvegarder</button>
+                    </div>
+               {{ form_end(creerPlatType) }}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

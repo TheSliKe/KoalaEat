@@ -34,7 +34,7 @@
                 <div class="card-body d-flex flex-column">
                     <ul>
                         {% for restaurant in listeRestaurant %}
-                            <li onclick = 'window.location.href="/dashboard/restaurant/{{ restaurant.getId() }}"'>
+                            <li onclick = 'window.location.href="/dashboard/restaurant/view/{{ restaurant.getId() }}"'>
                             {{ restaurant.getRELibelle() }}</li>
                         {% endfor %}
                     </ul>
