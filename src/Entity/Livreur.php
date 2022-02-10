@@ -182,4 +182,9 @@ class Livreur
 
         return $this;
     }
+
+    public function __toString(){
+        return $this->LI_Nom . " " . $this->LI_Prenom ;
+    }
+
 }

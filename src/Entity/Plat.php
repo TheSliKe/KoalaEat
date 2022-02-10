@@ -30,6 +30,9 @@ class Plat
     #[ORM\OneToMany(mappedBy: 'FK_PA', targetEntity: Compose::class)]
     private $composes;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $estSupprime;
+
 
     public function __construct()
     {
@@ -144,6 +147,18 @@ class Plat
                 $compose->setFKPA(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEstSupprime(): ?bool
+    {
+        return $this->estSupprime;
+    }
+
+    public function setEstSupprime(?bool $estSupprime): self
+    {
+        $this->estSupprime = $estSupprime;
 
         return $this;
     }
