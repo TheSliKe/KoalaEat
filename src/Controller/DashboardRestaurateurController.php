@@ -70,8 +70,9 @@ class DashboardRestaurateurController extends AbstractController
         $sql = '
                 SELECT distinct
                     commande.id as id, 
-                    status.st_libelle as st_libelle
-                FROM commande 
+                    status.st_libelle as st_libelle,
+                    possede.po_date as po_date
+                    FROM commande 
                     INNER JOIN possede 
                     ON commande.id = possede.fk_co_id
                     LEFT JOIN status
