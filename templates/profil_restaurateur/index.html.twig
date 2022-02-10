@@ -8,6 +8,10 @@
             background-image: url('../images/backRest.jpg');
             background-size: cover;
         }
+        .nav-link {
+            
+            color: black;
+        }
 
     </style>
 {% endblock %}
@@ -54,29 +58,38 @@
         </div>
   </div>
 </div>
-
-
+ 
+    <!--  <a href="/profil/restaurateur/restaurant/add/p1" class="nav-link" style="color: #212529">Ajouter un restaurant</a> -->
 <div class="card mx-auto" style="width: 90rem; margin-top : 15px">
-    <div class="card-body">
-        <ul class="nav nav-pills justify-content-center">
+    <div class="card-body text-center">
+
+        <button type="button" onclick='window.location.href = "/profil/restaurateur/restaurant/add/p1"' class="btn btn-outline-success mb-3">Ajouter un restaurant</button>
+
+        <ul class="nav nav-tabs justify-content-center">
 
             {% for restaurant in listeRestaurant %}
-                <li class="nav-item">
-                    <a href="#{{ restaurant.getId() }}" class="nav-link active" data-bs-toggle="tab" style="background-color: #212529">{{ restaurant.getRELibelle() }}</a>
+                <li class="nav-item" style="margin-right: 5px">
+                    {% if loop.index == 1 %}
+                    <a href="#{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" class="nav-link active" data-bs-toggle="tab">{{ restaurant.getRELibelle() }}</a>
+                    {% else %}
+                    <a href="#{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" class="nav-link" data-bs-toggle="tab">{{ restaurant.getRELibelle() }}</a>
+                    {% endif %}
                 </li>
             {% endfor %}
-
             
-            <li class="nav-item ">
-                <a href="/profil/restaurateur/restaurant/add/p1" class="nav-link" style="color: #212529">Ajouter un restaurant</a>
-            </li>
-        
+                
         </ul>
 
+           
         <div class="tab-content">
 
             {% for restaurant in listeRestaurant %}
-                <div class="tab-pane fade show active" id="{{ restaurant.getId() }}">
+
+                {% if loop.index == 1 %}
+                <div class="tab-pane fade show active" id="{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}">
+                {% else %}
+                <div class="tab-pane fade" id="{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}">
+                {% endif %}
                 
                     <div class="container">
                         <div class="row">
@@ -96,8 +109,8 @@
 
                                             <tr>
                                                 <th scope="row">{{ horaireResto.getFKSEM().getSEMLibelle }}</th>
-                                                <td>{{ horaireResto.getHoraireDebutMidi()|format_datetime('none', 'short', locale='fr') ~"-"~ horaireResto.getHoraireFinMidi()|format_datetime('none', 'short', locale='fr') }}</td>
-                                                <td>{{ horaireResto.getHoraireDebutSoir()|format_datetime('none', 'short', locale='fr') ~"-"~ horaireResto.getHoraireFinSoir()|format_datetime('none', 'short', locale='fr') }}</td>
+                                                <td>{{ horaireResto.getHoraireDebutMidi() ~"-"~ horaireResto.getHoraireFinMidi() }}</td>
+                                                <td>{{ horaireResto.getHoraireDebutSoir() ~"-"~ horaireResto.getHoraireFinSoir() }}</td>
                                             </tr>
 
                                         {% endfor %}
@@ -125,19 +138,44 @@
                                             {% endfor %}
                                         </ul>
 
-                                        <button type="button" class="btn btn-dark mt-3">Modifier le restaurant</button>
+                                        <button type="button" onclick='window.location.href = "/profil/restaurateur/restaurant/modify/p1/?rest={{ restaurant.getId() }}"' class="btn btn-dark mt-3">Modifier le restaurant</button>
+                                       <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" class="btn btn-danger mt-3">Supprimer le restaurant</button>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                 </div>
+
+                <!-- Modal Safe Delete-->
+                <div class="modal fade" id="deleteModal{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Supprimer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Vous allez supprimer : {{ restaurant.getRELibelle() }}
+                                <form method="post" id="delForm">
+                                    <button type="submit" class="btn btn-danger mt-3">Supprimer le restaurant</button>
+                                    <input type="hidden" name="delete" value="{{ restaurant.getId() }}"/>
+                                </form>
+                            </div>
+                            <div class="modal-footer">                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             {% endfor %}
 
         </div>
     </div>
 </div>  
+
+
+
+
 
 {% endblock %}
