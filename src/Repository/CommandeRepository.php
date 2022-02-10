@@ -88,13 +88,13 @@ class CommandeRepository extends ServiceEntityRepository
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */
-    // public function findByExampleField($value)
+    // public function findnotlivrer($idcommande): Collection
     // {
     //     return $this->createQueryBuilder('c')
-    //         ->andWhere('c.exampleField = :val')
-    //         ->setParameter('val', $value)
-    //         ->orderBy('c.id', 'ASC')
-    //         ->setMaxResults(10)
+    //         ->join(Possede::class, 'p')
+    //         ->where('p.FK_ST = 2')
+    //         ->where('c.FK_CO = :val')
+    //         ->setParameter('val', $idcommande)
     //         ->getQuery()
     //         ->getResult()
     //     ;

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Plat;
+use App\Entity\Possede;
 use App\Entity\Restaurateur;
 use App\Entity\Restaurant;
 use App\Form\CreerPlatType;
@@ -21,6 +22,7 @@ class DashboardRestaurateurController extends AbstractController
         $user_id = $this->getUser();
 
         $repository = $entityManager->getRepository(Restaurateur::class);
+       
         $restaurateur = $repository->findOneBy(['FK_US' => $user_id]);
 
         $listeRestaurant = $restaurateur->getRestaurants();
