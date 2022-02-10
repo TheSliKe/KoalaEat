@@ -80,6 +80,7 @@
                                 <th scope="col">N°</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Details</th>
+                                <th></th>
                                 <th scope="col">Heure</th>
                             </tr>
                         </thead>
@@ -92,7 +93,16 @@
                                     <td>
                                         {{ commande.st_libelle }}
                                     </td>
-                                    <td><button type="button" class="btn btn-outline-secondary" onclick='window.location.href="/detail/commande/{{ commande.id }}"'>Détails</button></td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary" onclick='window.location.href="/detail/commande/{{ commande.id }}"'>Détails</button>
+                                    </td>
+                                    <td>
+                                        {% if commande.st_libelle == "En attente" %}
+                                        <form>
+                                            <button type="button" class="btn btn-outline-secondary">Valider</button>
+                                        </form>
+                                        {% endif %}
+                                    </td>
                                     <td>18H45</td>
                                 </tr>      
                             {% endfor %}                  
