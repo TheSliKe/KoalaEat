@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Plat;
 use App\Entity\Restaurateur;
 use App\Entity\Restaurant;
+use App\Entity\Status;
+use App\Entity\Commande;
+use App\Entity\Possede;
 use App\Form\CreerPlatType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,35 +34,54 @@ class DashboardRestaurateurController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/restaurant/view/{id}', name: 'dashboard_restaurant')]
+     #[Route('/dashboard/restaurant/view/{id}', name: 'dashboard_restaurant')]
     public function dashboard_restaurant(Request $request, EntityManagerInterface $entityManager, $id): Response
     {
-        $conn = $entityManager->getConnection();
-
         if($request->isMethod('post')){
-            $repositoryPlat = $entityManager->getRepository(Plat::class);
-            $plat = $repositoryPlat->findOneBy(['id' => $_POST['idPlat']]);
-            $plat->setEstSupprime(true);
-            $entityManager->persist($plat);
-            $entityManager->flush();
+            if($request->get('idCmd')){
+                if($request->get('NextState')){
+                    if($request->get('NextState') == 1 || $request->get('NextState') == 3 || $request->get('NextState') == 4 ){
+                        $repositoryStatut = $entityManager->getRepository(Status::class);
+                        if($request->get('NextState') == 1){
+                            $status = $repositoryStatut->findOneBy(['id' => 2 ]);
+                        } 
+                        else if($request->get('NextState') == 3) {
+                            $status = $repositoryStatut->findOneBy(['id' => 4]);
+                        }
+                        else if($request->get('NextState') == 4 ){
+                            $status = $repositoryStatut->findOneBy(['id' => 5]);
+                        }
+                            
+                        $repositoryCommande = $entityManager->getRepository(Commande::class);
+                        $Commande = $repositoryCommande->findOneBy(['id' => $request->get('idCmd')]);
+
+                        $repositoryPossede = $entityManager->getRepository(Possede::class);
+                        if(count($repositoryPossede->findBy(['FK_ST' => $status, 'FK_CO' => $Commande])) == 0){
+                            $possede = new Possede();
+                            $now=new \DateTime();
+                            $possede->setPODate($now);
+                            $possede->setFKST($status);
+                            $possede->setFKCO($Commande);
+                            $entityManager->persist($possede);
+                            $entityManager->flush();
+                        }
+                    }
+                }
+            }
         }
 
-        $sql = '
-                SELECT DISTINCT
-                    commande.id as id, 
-                    status.st_libelle as st_libelle
-                FROM commande 
-                LEFT JOIN compose ON compose.fk_co_id = commande.id
-                INNER JOIN possede ON commande.id = possede.fk_co_id
-                LEFT JOIN status ON status.id = possede.fk_st_id
-                LEFT JOIN plat ON plat.id = compose.fk_pa_id
-                WHERE  plat.fk_re_id = :id
-                AND status.id !=2
-            ';
+        if($request->isMethod('post')){
+            if($request->get('idPlat')){
+                $repositoryPlat = $entityManager->getRepository(Plat::class);
+                $plat = $repositoryPlat->findOneBy(['id' => $_POST['idPlat']]);
+                $plat->setEstSupprime(true);
+                $entityManager->persist($plat);
+                $entityManager->flush();
+            }
+        }
 
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['id' => $id]);
-        $commandes = $resultSet->fetchAllAssociative();
+        $repositoryCommandes = $entityManager->getRepository(Commande::class);
+        $commandes = $repositoryCommandes->getCommandeEtStatus($id);
  
         $repositoryPlat = $entityManager->getRepository(Plat::class);
         $plats = $repositoryPlat->findBy(['FK_RE' => 1, 'estSupprime' => 0]);
