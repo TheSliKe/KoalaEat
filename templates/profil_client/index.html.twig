@@ -1,8 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfilClientController!{% endblock %}
+{% block title %}Profil Client{% endblock %}
 
 {% block navbaritems %}
+
+    <div class="navbar-nav">
+        <a class="nav-link" href="/dashboard/client">Dashboard</a>
+        <a class="nav-link active" href="/profil/client">Profil</a>
+        <a class="nav-link" href="/client/commandeEnCours">Commandes</a>
+        <a class="nav-link" href="/client/historiqueCommande">Historiques des Commandes</a>
+    </div>
 
     <form>
         <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
@@ -10,20 +17,35 @@
 
 {% endblock %}
 
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/PC-Portable/Desktop/koalaeat/project/KoalaEat/src/Controller/ProfilClientController.php'|file_link(0) }}">src/Controller/ProfilClientController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/PC-Portable/Desktop/koalaeat/project/KoalaEat/templates/profil_client/index.html.twig'|file_link(0) }}">templates/profil_client/index.html.twig</a></code></li>
-    </ul>
+
+<div class="card mx-auto" style="width: 90rem; margin-top : 15px">
+  <div class="card-body">
+    <h5 class="card-title">Profil du Client</h5>
+        <div class="container">
+            <div class="row">
+
+                <div class="col">
+     
+                    {{ form_start(ProfilClientForm) }}
+                        {{ form_row(ProfilClientForm.CL_Nom, {label : "Votre nom" }) }}
+                        {{ form_row(ProfilClientForm.CL_Prenom, {label : "Votre prénom:" }) }}
+                        {{ form_row(ProfilClientForm.CL_Mail, {label : "Votre mail" }) }}
+                        {{ form_row(ProfilClientForm.CL_Telephone, {label : "Numéro de téléphone" }) }}
+                        {{ form_row(ProfilClientForm.CL_Adresse, {label : "Adresse" }) }}
+                        {{ form_row(ProfilClientForm.FK_VI, {label : "Ville" }) }}
+                        
+                        <button type="submit" class="btn btn-dark">Sauvegarder</button>
+                    {{ form_end(ProfilClientForm) }}
+
+                </div>
+                <div class="col">
+                </div>
+
+            </div>
+        </div>
+  </div>
 </div>
 {% endblock %}

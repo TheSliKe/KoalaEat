@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commandes{% endblock %}
+
+{% block navbaritems %}
+
+    <div class="navbar-nav">
+        <a class="nav-link" href="/dashboard/client">Dashboard</a>
+        <a class="nav-link" href="/profil/client">Profil</a>
+        <a class="nav-link" href="/client/commandeEnCours">Commandes</a>
+        <a class="nav-link active" href="/client/historiqueCommande">Historiques des Commandes</a>
+    </div>
+
+    <form>
+        <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
+    </form>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="card mx-auto" style="width: 90rem; margin-top : 15px">
+  <div class="card-body">
+    <h5 class="card-title">Commandes en cours</h5>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>N°Commande</th>
+                                <th>Date</th>
+                                <th>Prix</th>
+                                <th>Details</th>
+                            </tr>
+                        <thead>
+                        <tbody>
+                            {% for possede in possedes %}
+                                {% if possede.FKST.STLibelle == 'Livrée' %}
+                                    {% set total = 0 %}
+                                    <tr> 
+                                        <th id='commandeId'>{{ possede.FKCO.id }}</th>
+                                        <th></th>
+                                        {# <th>{{ possede.POdate }}</th> #}
+                                        {% for commande in commandes %}
+                                            {% if possede.FKCO == commande %}
+                                                {% for compose in commande.composes %}
+                                                    {% set total = total + (compose.FKPA.PAPrix * compose.COQuantite) %}</th>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <th>{{ total }}</th>
+                                        <th><a class="btn btn-primary" id="details">Details<a></th>
+                                    <tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+<script>
+    $("#details").on('click', function (e) {
+         data = { 'id' : $("#commandeId").text() }
+        $.ajax({
+            url : '/client/detailsCommande',
+            type: 'POST',
+            data : data
+        }).done(function(response){
+           console.log(response);
+        })
+    });
+</script>
+{% endblock %}
