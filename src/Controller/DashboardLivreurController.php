@@ -11,6 +11,7 @@ use App\Entity\Commande;
 use App\Entity\Livreur;
 use App\Entity\Possede;
 use App\Entity\Status;
+use App\Entity\Plat;
 
 class DashboardLivreurController extends AbstractController
 {
