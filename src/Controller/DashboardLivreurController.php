@@ -10,36 +10,47 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Commande;
 use App\Entity\Restaurant;
 use App\Entity\Possede;
+use App\Entity\Plat;
 
 class DashboardLivreurController extends AbstractController
 {
     #[Route('/dashboard/livreur', name: 'dashboard_livreur')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $repositoryCommande = $entityManager->getRepository(Commande::class);
-        $commande = $repositoryCommande->findAll();
-        $repositoryRestauratnt= $entityManager->getRepository(Restaurant::class);
-        $restaurant = $repositoryRestauratnt->findAll();
-        $repositoryPossede = $entityManager->getRepository(Possede::class);
-        $possede = $repositoryPossede->findAll();
-        $repositoryPlat= $entityManager->getRepository(Plat::class);
-        $plat = $repositoryPlat->findOneBy(['']);
         $conn = $entityManager->getConnection();
         $sql = '
-                SELECT commande.* FROM commande 
-                LEFT JOIN compose ON compose.fk_co_id = commande.id
-                LEFT JOIN plat ON plat.id = compose.fk_pa_id
-                WHERE  plat.fk_re_id = :id
+            select c.id as id, 
+                re.re_adresse as restaurantAdresse, 
+                po.po_date as dateCommande, 
+                c.co_adresse_de_livraison as livraisonAdresse
+            FROM commande c
+                INNER JOIN possede po ON c.id = po.fk_co_id
+                LEFT JOIN compose co ON co.fk_co_id = c.id
+                LEFT JOIN plat pl ON pl.id = co.fk_pa_id
+                LEFT JOIN restaurant re ON re.id = pl.fk_re_id
+            where po.fk_st_id = 1; 
             ';
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['id' => $id]);
-        dump($resultSet->fetchAllAssociative());
-
+        $resultSet = $stmt->executeQuery();
+        $result = $resultSet->fetchAllAssociative();
+        // $sql2 = '
+        //     select c.id as id, 
+        //         re.re_adresse as restaurantAdresse, 
+        //         po.po_date as dateCommande, 
+        //         c.co_adresse_de_livraison as livraisonAdresse
+        //     FROM commande c
+        //         INNER JOIN possede po ON c.id = po.fk_co_id
+        //         LEFT JOIN compose co ON co.fk_co_id = c.id
+        //         LEFT JOIN plat pl ON pl.id = co.fk_pa_id
+        //         LEFT JOIN restaurant re ON re.id = pl.fk_re_id
+        //     where po.fk_st_id = 1; 
+        //     ';
+        // $stmt2 = $conn2->prepare($sql);
+        // $resultSet2 = $stmt2->executeQuery();
+        // $result2 = $resultSet2->fetchAllAssociative();
 
         return $this->render('dashboard_livreur/index.html.twig', [
-            'commandes' => $commande,
-            'restaurants' => $restaurant,
-            'possedes' => $possede
+            'commandes' => $result
         ]);
     }
 }
