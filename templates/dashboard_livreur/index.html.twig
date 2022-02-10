@@ -33,16 +33,56 @@
                     <tbody>
                         {% for commande in commandes %}
                             <tr>
+                            
                             <td>{{commande.id}}</td>
-                            <td>{{}}</td>
-                            <td></td>
-                            <td>{{commande.COAdresseDeLivraison}}</td>
+                            <td>{{commande.restaurantAdresse}}</td>
+                            <td>{{commande.dateCommande}}</td>
+                            <td>{{commande.livraisonAdresse}}</td>
+                            <td><button class="btn btn-primary">Prendre la commande</button></td>
                             </tr>
                         {% endfor %}
                     </tbody>
-                </table>
+                </table>       
+                </div>
+                <div class="col">
+                </div>
 
-                        
+            </div>
+        </div>
+  </div>
+</div>
+<br>
+<div class="card mx-auto" style="width: 90rem; margin-top : 15px">
+  <div class="card-body">
+    <h5 class="card-title">Livraison prise en charge</h5>
+        <div class="container">
+            <div class="row">
+
+                <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Adresse restaurant</th>
+                            <th>Heure de la commande</th>
+                            <th>Adresse de Livraison</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for commandePriseEnCharge in commandesPreiseEnCharge %}
+                            <tr>
+                            <td>{{commandePriseEnCharge.id}}</td>
+                            <td>{{commandePriseEnCharge.restaurantAdresse}}</td>
+                            <td>{{commandePriseEnCharge.dateCommande}}</td>
+                            <td>{{commandePriseEnCharge.livraisonAdresse}}</td>
+                            <td><button class="btn btn-primary">Prise en charge</button></td>
+                            <td><button class="btn btn-primary">ok</button></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table> 
                 </div>
                 <div class="col">
                 </div>
