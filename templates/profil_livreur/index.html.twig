@@ -2,6 +2,15 @@
 
 {% block title %}Profil Livreur{% endblock %}
 
+{% block customstylesheets %}
+    <style>
+        body {
+            background-image: url('../images/backRest.jpg');
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
+
 {% block navbaritems %}
      <div class="navbar-nav">
         <a class="nav-link active" href="/dashboard/livreur">Dashboard</a>
@@ -13,16 +22,15 @@
 
 {% endblock %}
 
-
 {% block body %}
-<div class="card mx-auto" style="width: 90rem; margin-top : 15px">
-  <div class="card-body">
-    <h5 class="card-title">Profil du Livreur</h5>
-        <div class="container">
-            <div class="row">
 
-                <div class="col">
-     
+<div class="container">
+    <div class="row">
+        <div class="col">
+        
+            <div class="card mx-auto mt-5" style="width: 30rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Livreur</h3>
                     {{ form_start(ProfilLivreurForm) }}
                         {{ form_row(ProfilLivreurForm.LI_Nom, {   label : "Votre nom" }) }}
                         {{ form_row(ProfilLivreurForm.LI_Prenom, {  label : "Votre prénom:" }) }}
@@ -33,32 +41,27 @@
                         <button type="submit" class="btn btn-dark">Sauvegarder</button>
                     {{ form_end(ProfilLivreurForm) }}
                
-                </div>
-                <div class="col">
-                </div>
 
+                </div>
             </div>
-        </div>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Nouveau Véhicule</h5>
-        <div class="container">
-            <div class="row">
 
-                <div class="col">
-     
+        </div>
+        <div class="col">
+
+            <div class="card mx-auto mt-5" style="width: 30rem;">
+                <div class="card-body">
+                  
                     {{ form_start(VehiculeForm) }}
                         {{ form_row(VehiculeForm.VE_Libelle, {   label : "Type de véhicule" }) }}
                         {{ form_row(VehiculeForm.VE_Immatriculation, {  label : "Votre immatriculation" }) }}                     
                         <button type="submit" class="btn btn-dark">Sauvegarder</button>
                     {{ form_end(VehiculeForm) }}
-               
+            
                 </div>
-                <div class="col">
-                </div>
-
             </div>
+
         </div>
-  </div>
+    </div>
 </div>
+
 {% endblock %}
