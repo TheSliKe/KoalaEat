@@ -6,7 +6,6 @@ use App\Entity\Client;
 use App\Entity\Commande;
 use App\Entity\Compose;
 use App\Entity\Plat;
-use App\Entity\Possede;
 use App\Form\ProfilClientType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProfilClientController extends AbstractController
@@ -55,15 +53,14 @@ class ProfilClientController extends AbstractController
     {
         $user = $this->security->getUser();
         $repoClient = $entityManager->getRepository(Client::class);
-        $repoPossede = $entityManager->getRepository(Possede::class);
         $repoCommande = $entityManager->getRepository(Commande::class);
 
         $client = $repoClient->findOneBy(['FK_US' => $user]);
-        $commandes = $repoCommande->findBy(['FK_CL' => $client]);
-        $possedes = $repoPossede->findBy(['FK_CO' => $commandes]);
+        $commandes = $repoCommande->getCommandeEnCours($client->getId());
+
 
         return $this->render('commandes_client/commande_en_cours.html.twig', [
-            'possedes' => $possedes
+            'commandes' => $commandes
         ]);
     }
 
@@ -72,16 +69,12 @@ class ProfilClientController extends AbstractController
     {
         $user = $this->security->getUser();
         $repoClient = $entityManager->getRepository(Client::class);
-        $repoPossede = $entityManager->getRepository(Possede::class);
         $repoCommande = $entityManager->getRepository(Commande::class);
 
         $client = $repoClient->findOneBy(['FK_US' => $user]);
-        $commandes = $repoCommande->findBy(['FK_CL' => $client]);
-        $possedes = $repoPossede->findBy(['FK_CO' => $commandes]);
+        $commandes = $repoCommande->getCommande($client->getId());
 
-        
         return $this->render('commandes_client/historique_commandes.html.twig', [
-            'possedes' => $possedes,
             'commandes' => $commandes
         ]);
     }
@@ -103,8 +96,14 @@ class ProfilClientController extends AbstractController
             $composes = $repoCompose->findBy(['FK_CO' => $commande]);
             foreach ($composes as $compose) {
                 $plat = $compose->getFKPA();
+                $restaurant = $plat->getFKRE();
 
-                array_push($info, ['Libelle' => $plat->getPALibelle()]);
+                array_push($info, [
+                    'Libelle' => $plat->getPALibelle(),
+                    'Prix' => $plat->getPAPrix(),
+                    'Quantite' => $compose->getCOQuantite(),
+                    'Restaurant' => $restaurant->getRELibelle(),
+                    ]);
             }
             // $plats = $repoCompose->getPlats();
             // $jsonData = array();

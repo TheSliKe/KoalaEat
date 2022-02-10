@@ -31,17 +31,17 @@
                                 <th>N°Commande</th>
                                 <th>Commande status</th>
                                 <th>Horaire Livraison</th>
+                                <th>Details</th>
                             </tr>
                         <thead>
                         <tbody>
-                            {% for possede in possedes %}
-                                {% if possede.FKST.STLibelle != 'Livrée' %}
-                                    <tr>
-                                        <th>{{ possede.FKCO.id }}</th>
-                                        <th>{{ possede.FKST.STLibelle}}</th>
-                                        {# <th>{{ possede.POdate}}</th> #}
-                                    <tr>
-                                {% endif %}
+                            {% for commande in commandes %}
+                                <tr>
+                                    <th> {{ commande.id }} </th>
+                                    <th> {{ commande.status }} </th>
+                                    <th> {{ commande.date }} </th>
+                                    <th><a class="btn btn-primary" onclick="details({{ commande.id}});">Details<a></th>
+                                </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -50,4 +50,74 @@
         </div>
   </div>
 </div>
+<div id="modalDetails" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Details Commande</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom Plat</th>
+                            <th>Prix</th>
+                            <th>Quantité</th>
+                            <th>Prix Total</th>
+                            <th>Restaurant</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyModal">
+                    </tbody>
+                    <tfooter>
+                        <tr id="trFooter">
+                            <th></th>
+                            <th>Total : </th>
+                        </tr>
+                    </tfooter>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function details($id){
+         data = { 'id' : $id }
+        $.ajax({
+            url : '/client/detailsCommande',
+            type: 'POST',
+            data : data
+        }).done(function(response){
+            $("#modalDetails").modal("show")
+            $("#tbodyModal").empty();
+            $("#trFooter").empty();
+            total = 0;
+            quantiteTotal = 0;
+            response.forEach(function(element){
+                prixTotal = element.Quantite * element.Prix
+                quantiteTotal += element.Quantite
+                html = "<tr>" +
+                "<th>" + element.Libelle + "</th>" +
+                "<th>" + element.Prix + "</th>" +
+                "<th>" + element.Quantite + "</th>" +
+                "<th>" +  prixTotal + "</th>" +
+                "<th>" + element.Restaurant +"</th>" +
+                "</tr>";
+                total = total + prixTotal;
+                $("#tbodyModal").append(html);
+            })
+            footer = "<th></th>"+
+                    "<th>Total : </th>" +
+                    "<th>" + quantiteTotal + "</th>"+
+                    "<th>" + total + "</th>"
+            $("#trFooter").append(footer);
+        })
+    };
+</script>
 {% endblock %}
