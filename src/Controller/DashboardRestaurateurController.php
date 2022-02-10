@@ -45,16 +45,18 @@ class DashboardRestaurateurController extends AbstractController
         }
 
         $sql = '
-                SELECT 
+                SELECT DISTINCT
                     commande.id as id, 
                     status.st_libelle as st_libelle
                 FROM commande 
                 LEFT JOIN compose ON compose.fk_co_id = commande.id
-                LEFT JOIN possede ON commande.id = possede.fk_co_id
+                INNER JOIN possede ON commande.id = possede.fk_co_id
                 LEFT JOIN status ON status.id = possede.fk_st_id
                 LEFT JOIN plat ON plat.id = compose.fk_pa_id
                 WHERE  plat.fk_re_id = :id
+                AND status.id !=2
             ';
+
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery(['id' => $id]);
         $commandes = $resultSet->fetchAllAssociative();

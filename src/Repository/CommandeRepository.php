@@ -35,7 +35,7 @@ class CommandeRepository extends ServiceEntityRepository
     //         ->select('c.id as id')
     //         ->addSelect('s.ST_Libelle as st_libelle')
     //         ->leftJoin(Compose::class, 'v')
-    //         ->leftJoin(Possede::class, 'p')
+    //         ->innerJoin(Possede::class, 'p')
     //         ->leftJoin(Status::class, 's')
     //         ->leftJoin(Plat::class, 'n')
     //         ->where('n.FK_RE = :id')
