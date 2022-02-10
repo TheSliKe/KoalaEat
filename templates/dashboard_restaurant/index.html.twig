@@ -98,8 +98,9 @@
                                     </td>
                                     <td>
                                         {% if commande.st_libelle == "En attente" %}
-                                        <form>
-                                            <button type="button" class="btn btn-outline-secondary">Valider</button>
+                                        <form method="post">
+                                            <input type="hidden" name="idCmd" value = "{{commande.id}}">
+                                            <input type="submit" class="btn btn-outline-secondary" name="EtapeSuivante" value="Valider">
                                         </form>
                                         {% endif %}
                                     </td>
