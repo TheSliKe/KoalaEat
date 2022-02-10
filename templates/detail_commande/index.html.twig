@@ -2,6 +2,15 @@
 
 {% block title %}Hello DetailCommandeController!{% endblock %}
 
+{% block customstylesheets %}
+    <style>
+        body {
+            background-image: url('../../images/backRestaurateur.jpg');
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
 {{ form_start(DetailCommandeType) }}
     {{form_row(DetailCommandeType.CO_AdresseDeLivraison ,{label: 'Adresse de livraison'})}}
