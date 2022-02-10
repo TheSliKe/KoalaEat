@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Livreur{% endblock %}
+
+{% block navbaritems %}
+     <div class="navbar-nav">
+        <a class="nav-link active" href="/dashboard/livreur">Dashboard</a>
+        <a class="nav-link" href="/profil/livreur">Profil</a>
+    </div>
+    <form>
+        <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
+    </form>
+
+{% endblock %}
+{% block body %}
+    <div class="card mx-auto" style="width: 90rem; margin-top : 15px">
+  <div class="card-body">
+    <h5 class="card-title">Dashboard du livreur</h5>
+        <div class="container">
+            <div class="row">
+
+                <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Adresse restaurant</th>
+                            <th>Heure de la commande</th>
+                            <th>Adresse de Livraison</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for commande in commandes %}
+                            <tr>
+                            <td>{{commande.id}}</td>
+                            <td>{{}}</td>
+                            <td></td>
+                            <td>{{commande.COAdresseDeLivraison}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                        
+                </div>
+                <div class="col">
+                </div>
+
+            </div>
+        </div>
+  </div>
+</div>
+{% endblock %}
