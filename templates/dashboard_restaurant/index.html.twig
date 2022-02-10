@@ -97,9 +97,16 @@
                                         <button type="button" class="btn btn-outline-secondary" onclick='window.location.href="/detail/commande/{{ commande.id }}"'>Détails</button>
                                     </td>
                                     <td>
-                                        {% if commande.st_libelle == "En attente" %}
+                                        {% if commande.status_id == 1 or commande.status_id == 3 or commande.status_id == 4 %}
                                         <form method="post">
                                             <input type="hidden" name="idCmd" value = "{{commande.id}}">
+                                            {% if commande.status_id == 1 %}
+                                                <input type="hidden" name="NextState" value = "1">
+                                            {% elseif commande.status_id == 3 %}
+                                                <input type="hidden" name="NextState" value = "3">
+                                            {% elseif commande.status_id == 4 %}
+                                                <input type="hidden" name="NextState" value = "4">
+                                            {% endif %}
                                             <input type="submit" class="btn btn-outline-secondary" name="EtapeSuivante" value="Valider">
                                         </form>
                                         {% endif %}

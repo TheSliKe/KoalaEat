@@ -42,17 +42,31 @@ class DashboardRestaurateurController extends AbstractController
 
         if($request->isMethod('post')){
             if($request->get('idCmd')){
-                $repositoryStatut = $entityManager->getRepository(Status::class);
-                $status = $repositoryStatut->findOneBy(['id' => 4]);
-                $repositoryCommande = $entityManager->getRepository(Commande::class);
-                $Commande = $repositoryCommande->findOneBy(['id' => $request->get('idCmd')]);
-                $possede = new Possede();
-                $now=new \DateTime();
-                $possede->setPODate($now);
-                $possede->setFKST($status);
-                $possede->setFKCO($Commande);
-                $entityManager->persist($possede);
-                $entityManager->flush();
+                if($request->get('NextState')){
+                    if($request->get('NextState') == 1 || $request->get('NextState') == 3 || $request->get('NextState') == 4 ){
+                        $repositoryStatut = $entityManager->getRepository(Status::class);
+
+                        if($request->get('NextState') == 1){
+                            $status = $repositoryStatut->findOneBy(['id' =>2 ]);
+                        } 
+                        else if($request->get('NextState') == 3) {
+                            $status = $repositoryStatut->findOneBy(['id' =>4]);
+                        }
+                        else if($request->get('NextState') == 4 ){
+                            $status = $repositoryStatut->findOneBy(['id' =>5]);
+                        }
+                        
+                        $repositoryCommande = $entityManager->getRepository(Commande::class);
+                        $Commande = $repositoryCommande->findOneBy(['id' => $request->get('idCmd')]);
+                        $possede = new Possede();
+                        $now=new \DateTime();
+                        $possede->setPODate($now);
+                        $possede->setFKST($status);
+                        $possede->setFKCO($Commande);
+                        $entityManager->persist($possede);
+                        $entityManager->flush();
+                    }
+                }
             }
         }
 
@@ -70,23 +84,24 @@ class DashboardRestaurateurController extends AbstractController
                 SELECT distinct
                     commande.id as id, 
                     status.st_libelle as st_libelle,
-                    possede.po_date as po_date
-                    FROM commande 
-                    INNER JOIN possede 
-                    ON commande.id = possede.fk_co_id
-                    LEFT JOIN status
-                    ON status.id = possede.fk_st_id
-                    Left JOIN restaurant
-                    ON restaurant.id 
-                    AND commande.fk_restaurant_id
-                    WHERE commande.fk_restaurant_id = :id
-                    AND status.id != 2
-                    AND possede.po_date IN 
-                    (
-                        SELECT max(possede.po_date) 
-                        FROM possede 
-                        GROUP BY possede.fk_co_id
-                    )
+                    possede.po_date as po_date,
+                    status.id as status_id
+                FROM commande 
+                INNER JOIN possede 
+                ON commande.id = possede.fk_co_id
+                LEFT JOIN status
+                ON status.id = possede.fk_st_id
+                Left JOIN restaurant
+                ON restaurant.id 
+                AND commande.fk_restaurant_id
+                WHERE commande.fk_restaurant_id = :id
+                AND status.id != 7
+                AND possede.po_date IN 
+                (
+                    SELECT max(possede.po_date) 
+                    FROM possede 
+                    GROUP BY possede.fk_co_id
+                )
             ';
 
         $stmt = $conn->prepare($sql);
