@@ -2,8 +2,71 @@
 
 {% block title %}Hello DetailCommandeController!{% endblock %}
 
+{% block navbaritems %}
+
+    <div class="navbar-nav">
+        <a class="nav-link active" href="/dashboard/restaurateur">Dashboard</a>
+        <a class="nav-link" href="/profil/restaurateur">Profil</a>
+    </div>
+    
+    <form>
+        <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
+    </form>
+
+{% endblock %}
+
 {% block body %}
-{{ form_start(DetailCommandeType) }}
+
+<div class="card mx-auto mt-4" style="width: 70rem;">
+    <div class="card-body">
+        <h5 class="card-title">Detail Commande n°</h5>
+        <h6 class="card-subtitle mb-2 text-muted"> Adresse de livraison : {{commande.getCOAdresseDeLivraison()}}</h6>
+      
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Plat</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for plat in plats %}
+                    <tr>
+                        <th scope="row">{{plat.getFKPA().getPALibelle()}}</th>
+                        <td>{{plat.getCOQuantite()}}</td>
+                        <td>{{plat.getFKPA().getPAPrix()}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+         <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for status in statusList %}
+                    <tr>
+                        <td>{{status.getFKST().getSTLibelle()}}</th>
+                        <td>{{status.getPODate()|date("m-d-Y H:i:s")}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+
+
+{# {{ form_start(DetailCommandeType) }}
     {{form_row(DetailCommandeType.CO_AdresseDeLivraison ,{label: 'Adresse de livraison'})}}
     {{form_row(DetailCommandeType.FK_LI ,{label: 'Livreur'})}}
     {{form_row(DetailCommandeType.FK_CL ,{label: 'Client'})}}
@@ -56,5 +119,5 @@
             </tr>
         {% endfor %}
     </tbody>
-</table>
+</table> #}
 {% endblock %}

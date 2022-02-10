@@ -27,33 +27,17 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
-    // /**
-    //  * @return Collection[] Returns an array of Commande objects
-    //  */
-    // public function findByiD($id): ?Collection {
-    //     return $this->createQueryBuilder('c')
-    //         ->select('c.id as id')
-    //         ->addSelect('s.ST_Libelle as st_libelle')
-    //         ->leftJoin(Compose::class, 'v')
-    //         ->innerJoin(Possede::class, 'p')
-    //         ->leftJoin(Status::class, 's')
-    //         ->leftJoin(Plat::class, 'n')
-    //         ->where('n.FK_RE = :id')
-    //         ->setParameter(':id', $id)
-    //         ->getQuery()
-    //         ->getResult();
-    // }
-    
+   
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */
-    // public function findByExampleField($value)
+    // public function findnotlivrer($idcommande): Collection
     // {
     //     return $this->createQueryBuilder('c')
-    //         ->andWhere('c.exampleField = :val')
-    //         ->setParameter('val', $value)
-    //         ->orderBy('c.id', 'ASC')
-    //         ->setMaxResults(10)
+    //         ->join(Possede::class, 'p')
+    //         ->where('p.FK_ST = 2')
+    //         ->where('c.FK_CO = :val')
+    //         ->setParameter('val', $idcommande)
     //         ->getQuery()
     //         ->getResult()
     //     ;
