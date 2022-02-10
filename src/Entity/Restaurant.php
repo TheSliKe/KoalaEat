@@ -37,11 +37,15 @@ class Restaurant
     #[ORM\OneToMany(mappedBy: 'FK_RE', targetEntity: HoraireRestaurant::class)]
     private $horaireRestaurants;
 
+    #[ORM\OneToMany(mappedBy: 'fk_restaurant', targetEntity: Commande::class)]
+    private $commandes;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->plats = new ArrayCollection();
         $this->horaireRestaurants = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,6 +190,36 @@ class Restaurant
 
     public function __toString(){
         return $this->RE_Libelle;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setFkRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getFkRestaurant() === $this) {
+                $commande->setFkRestaurant(null);
+            }
+        }
+
+        return $this;
     }
 
 }

@@ -31,6 +31,9 @@ class Commande
     #[ORM\JoinColumn(nullable: false)]
     private $FK_CL;
 
+    #[ORM\ManyToOne(targetEntity: Restaurant::class, inversedBy: 'commandes')]
+    private $fk_restaurant;
+
     public function __construct()
     {
         $this->FK_PA = new ArrayCollection();
@@ -160,6 +163,18 @@ class Commande
     public function setFKCL(?Client $FK_CL): self
     {
         $this->FK_CL = $FK_CL;
+
+        return $this;
+    }
+
+    public function getFkRestaurant(): ?Restaurant
+    {
+        return $this->fk_restaurant;
+    }
+
+    public function setFkRestaurant(?Restaurant $fk_restaurant): self
+    {
+        $this->fk_restaurant = $fk_restaurant;
 
         return $this;
     }
