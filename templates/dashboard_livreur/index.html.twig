@@ -13,42 +13,101 @@
 
 {% endblock %}
 {% block body %}
-    <div class="card mx-auto" style="width: 90rem; margin-top : 15px">
-  <div class="card-body">
-    <h5 class="card-title">Dashboard du livreur</h5>
-        <div class="container">
-            <div class="row">
 
-                <div class="col">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>N°</th>
-                            <th>Adresse restaurant</th>
-                            <th>Heure de la commande</th>
-                            <th>Adresse de Livraison</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for commande in commandes %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col">
+
+            <div class="card mx-auto mt-4" style="width: 35rem; height: 40rem">
+                <div class="card-body">
+                    <h5 class="card-title">Dashboard du livreur</h5>
+
+                    <table class="table">
+                        <thead>
                             <tr>
-                            <td>{{commande.id}}</td>
-                            <td>{{}}</td>
-                            <td></td>
-                            <td>{{commande.COAdresseDeLivraison}}</td>
+                                <th>N°</th>
+                                <th>Adresse restaurant</th>
+                                <th>Heure de la commande</th>
+                                <th>Adresse de Livraison</th>
+                                <th></th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for commande in commandes %}
+                                <tr>
+                                    <td>{{commande.id}}</td>
+                                    <td>{{commande.restaurantAdresse}}</td>
+                                    <td>{{commande.dateCommande}}</td>
+                                    <td>{{commande.livraisonAdresse}}</td>
+                                    <td>
 
-                        
-                </div>
-                <div class="col">
-                </div>
+                                    <form method="post" id="prendreEnCharge">
+                                        <button typoe="submit" class="btn btn-primary">Prendre la commande</button>
+                                        <input type="hidden" name="prendreEnCharge" value="{{ commande.id }}"/>
+                                    </form>
 
+                                    
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+           
+        </div>
+        <div class="col">
+
+            <div class="card mx-auto mt-4" style="width: 35rem; height: 40rem">
+                <div class="card-body">
+                    <h5 class="card-title">Livraison prise en charge</h5>     
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Adresse restaurant</th>
+                                <th>Heure de la commande</th>
+                                <th>Adresse de Livraison</th>
+                                <th>Etat</th>
+                                <th></th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for commandePriseEnCharge in commandesPreiseEnCharge %}
+                                <tr>
+                                    <td>{{commandePriseEnCharge.id}}</td>
+                                    <td>{{commandePriseEnCharge.restaurantAdresse}}</td>
+                                    <td>{{commandePriseEnCharge.dateCommande}}</td>
+                                    <td>{{commandePriseEnCharge.livraisonAdresse}}</td>
+                                    <td>{{commandePriseEnCharge.status}}</td>
+                                    <td>
+                                    {% if commandePriseEnCharge.status == "Prête à être expédié" %}
+
+                                    <form method="post" id="commandeRecupere">
+                                        <button typoe="submit" class="btn btn-primary">Commande récuperée</button>
+                                        <input type="hidden" name="commandeRecupere" value="{{ commandePriseEnCharge.id }}"/>
+                                    </form>
+
+                                    {% elseif commandePriseEnCharge.status == "En cours de livraison" %}
+
+                                    <form method="post" id="commandeLivre">
+                                        <button typoe="submit" class="btn btn-primary">Commande livrée</button>
+                                        <input type="hidden" name="commandeLivre" value="{{ commandePriseEnCharge.id }}"/>
+                                    </form>
+
+                                    {% endif %}
+                                    
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>    
+                </div>
             </div>
         </div>
-  </div>
+    </div>
 </div>
 {% endblock %}
