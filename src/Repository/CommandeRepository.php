@@ -115,27 +115,9 @@ class CommandeRepository extends ServiceEntityRepository
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery([':idLivreur' => $livreur->getId()]);
         return $resultSet->fetchAllAssociative();
-        
     }
 
-    // /**
-    //  * @return Collection[] Returns an array of Commande objects
-    //  */
-    // public function findByiD($id): ?Collection {
-    //     return $this->createQueryBuilder('c')
-    //         ->select('c.id as id')
-    //         ->addSelect('s.ST_Libelle as st_libelle')
-    //         ->leftJoin(Compose::class, 'v')
-    //         ->innerJoin(Possede::class, 'p')
-    //         ->leftJoin(Status::class, 's')
-    //         ->leftJoin(Plat::class, 'n')
-    //         ->where('n.FK_RE = :id')
-    //         ->setParameter(':id', $id)
-    //         ->getQuery()
-    //         ->getResult();
-    // }
-    
-    public function getCommandeEtStatus($id) {
+        public function getCommandeEtStatus($id) {
         $conn = $this->getEntityManager()->getConnection();
         $sql = '
                 SELECT distinct
@@ -164,6 +146,53 @@ class CommandeRepository extends ServiceEntityRepository
         $resultSet = $stmt->executeQuery([':id' => $id]);
         return $resultSet->fetchAllAssociative();
     }
+
+    // /**
+    //  * @return Collection[] Returns an array of Commande objects
+    //  */
+    // public function findByiD($id): ?Collection {
+    //     return $this->createQueryBuilder('c')
+    //         ->select('c.id as id')
+    //         ->addSelect('s.ST_Libelle as st_libelle')
+    //         ->leftJoin(Compose::class, 'v')
+    //         ->innerJoin(Possede::class, 'p')
+    //         ->leftJoin(Status::class, 's')
+    //         ->leftJoin(Plat::class, 'n')
+    //         ->where('n.FK_RE = :id')
+    //         ->setParameter(':id', $id)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+    
+    // public function getCommandeEtStatus($id) {
+    //     $conn = $this->getEntityManager()->getConnection();
+    //     $sql = '
+    //             SELECT distinct
+    //                 commande.id as id, 
+    //                 status.st_libelle as st_libelle,
+    //                 possede.po_date as po_date,
+    //                 status.id as status_id
+    //             FROM commande 
+    //             INNER JOIN possede 
+    //             ON commande.id = possede.fk_co_id
+    //             LEFT JOIN status
+    //             ON status.id = possede.fk_st_id
+    //             Left JOIN restaurant
+    //             ON restaurant.id 
+    //             AND commande.fk_restaurant_id
+    //             WHERE commande.fk_restaurant_id = :id
+    //             AND status.id != 7
+    //             AND possede.po_date IN 
+    //             (
+    //                 SELECT max(possede.po_date) 
+    //                 FROM possede 
+    //                 GROUP BY possede.fk_co_id
+    //             )
+    //         ';
+    //     $stmt = $conn->prepare($sql);
+    //     $resultSet = $stmt->executeQuery([':id' => $id]);
+    //     return $resultSet->fetchAllAssociative();
+    // }
     
     
     public function getCommandesDetailsLivreur($id){
