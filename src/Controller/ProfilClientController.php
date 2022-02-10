@@ -106,8 +106,7 @@ class ProfilClientController extends AbstractController
 
                 array_push($info, ['Libelle' => $plat->getPALibelle()]);
             }
-            // $plats = $repoCompose->getPlats();
-            // $jsonData = array();
+
             $jsonData = $info;  
             return new JsonResponse($jsonData); 
          } else { 
