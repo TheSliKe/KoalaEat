@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Plat;
-use App\Entity\Possede;
+use App\Entity\Status;
 use App\Entity\Restaurateur;
 use App\Entity\Restaurant;
+use App\Entity\Possede;
+use App\Entity\Commande;
 use App\Form\CreerPlatType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,30 +40,53 @@ class DashboardRestaurateurController extends AbstractController
     {
         $conn = $entityManager->getConnection();
 
+
         if($request->isMethod('post')){
-            $repositoryPlat = $entityManager->getRepository(Plat::class);
-            $plat = $repositoryPlat->findOneBy(['id' => $_POST['idPlat']]);
-            $plat->setEstSupprime(true);
-            $entityManager->persist($plat);
-            $entityManager->flush();
+            if($request->get('idCmd')){
+                $repositoryStatut = $entityManager->getRepository(Status::class);
+                $status = $repositoryStatut->findOneBy(['id' => 4]);
+                $repositoryCommande = $entityManager->getRepository(Commande::class);
+                $Commande = $repositoryCommande->findOneBy(['id' => $request->get('idCmd')]);
+                $possede = new Possede();
+                $now=new \DateTime();
+                $possede->setPODate($now);
+                $possede->setFKST($status);
+                $possede->setFKCO($Commande);
+                $entityManager->persist($possede);
+                $entityManager->flush();
+            }
+        }
+
+        if($request->isMethod('post')){
+            if($request->get('idPlat')){
+                $repositoryPlat = $entityManager->getRepository(Plat::class);
+                $plat = $repositoryPlat->findOneBy(['id' => $_POST['idPlat']]);
+                $plat->setEstSupprime(true);
+                $entityManager->persist($plat);
+                $entityManager->flush();
+            }
         }
 
         $sql = '
                 SELECT distinct
                     commande.id as id, 
-                    status.st_libelle as st_libelle,
-                    max(possede.po_date)
+                    status.st_libelle as st_libelle
                 FROM commande 
-                    LEFT JOIN compose ON compose.fk_co_id = commande.id
-                    INNER JOIN possede ON commande.id = possede.fk_co_id
-                    LEFT JOIN status ON status.id = possede.fk_st_id
-                    LEFT JOIN plat ON plat.id = compose.fk_pa_id
-                WHERE  plat.fk_re_id = :id
-                    AND status.id <> 2
-                GROUP by commande.id,
-                    status.st_libelle,
-                    possede.po_date
-                having possede.po_date;
+                    INNER JOIN possede 
+                    ON commande.id = possede.fk_co_id
+                    LEFT JOIN status
+                    ON status.id = possede.fk_st_id
+                    Left JOIN restaurant
+                    ON restaurant.id 
+                    AND commande.fk_restaurant_id
+                    WHERE commande.fk_restaurant_id = :id
+                    AND status.id != 2
+                    AND possede.po_date IN 
+                    (
+                        SELECT max(possede.po_date) 
+                        FROM possede 
+                        GROUP BY possede.fk_co_id
+                    )
             ';
 
         $stmt = $conn->prepare($sql);
