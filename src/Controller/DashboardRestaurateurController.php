@@ -45,16 +45,21 @@ class DashboardRestaurateurController extends AbstractController
         }
 
         $sql = '
-                SELECT DISTINCT
+                SELECT distinct
                     commande.id as id, 
-                    status.st_libelle as st_libelle
+                    status.st_libelle as st_libelle,
+                    max(possede.po_date)
                 FROM commande 
-                LEFT JOIN compose ON compose.fk_co_id = commande.id
-                INNER JOIN possede ON commande.id = possede.fk_co_id
-                LEFT JOIN status ON status.id = possede.fk_st_id
-                LEFT JOIN plat ON plat.id = compose.fk_pa_id
+                    LEFT JOIN compose ON compose.fk_co_id = commande.id
+                    INNER JOIN possede ON commande.id = possede.fk_co_id
+                    LEFT JOIN status ON status.id = possede.fk_st_id
+                    LEFT JOIN plat ON plat.id = compose.fk_pa_id
                 WHERE  plat.fk_re_id = :id
-                AND status.id !=2
+                    AND status.id <> 2
+                GROUP by commande.id,
+                    status.st_libelle,
+                    possede.po_date
+                having possede.po_date;
             ';
 
         $stmt = $conn->prepare($sql);
