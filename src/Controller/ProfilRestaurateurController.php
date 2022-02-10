@@ -42,12 +42,7 @@ class ProfilRestaurateurController extends AbstractController
         $form1->handleRequest($request);
         $form2->handleRequest($request);
         $form3->handleRequest($request);
-        
-        $restaurateurName = $restaurateur->getRESNom();
-        $restaurateurPrenom = $restaurateur->getRESPrenom();
-        $restaurateurMail = $restaurateur->getRESMail();
-        $restaurateurTel = $restaurateur->getRESTelephone();
-        $restaurateurAdresse = $restaurateur->getRESAdresse();
+
         
         if ($form1->isSubmitted() && $form1->isValid()) {
             $entityManager->persist($restaurateur);
@@ -57,11 +52,7 @@ class ProfilRestaurateurController extends AbstractController
             'ProfilRestaurateurForm' => $form1->createView(), 
             'CreerRestaurantType' => $form2->createView(),
             'RestaurantHoraireType' => $form3->createView(),
-            'restaurateurName' => $restaurateurName, 
-            'restaurateurPrenom' => $restaurateurPrenom, 
-            'restaurateurMail' => $restaurateurMail, 
-            'restaurateurTel' => $restaurateurTel,
-            'restaurateurAdresse' => $restaurateurAdresse
+            
         ]);
     }
 }

@@ -22,6 +22,11 @@ class Vehicule
     #[ORM\ManyToOne(targetEntity: Livreur::class, inversedBy: 'vehicules')]
     private $FK_LI;
 
+    public function __toString()
+    {
+        $result = $this->VE_Libelle ." / " . $this->VE_Immatriculation;
+        return  (string) $result;
+    }
     public function getId(): ?int
     {
         return $this->id;

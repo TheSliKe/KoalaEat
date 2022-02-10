@@ -28,11 +28,11 @@
                 <div class="col">
      
                     {{ form_start(ProfilRestaurateurForm) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_Nom, { value : restaurateurName, label : "Votre nom" }) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_Prenom, { value : restaurateurPrenom, label : "Votre prénom:" }) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_Mail, { value : restaurateurMail, label : "Votre mail" }) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_Telephone, { value : restaurateurTel, label : "Numéro de téléphone" }) }}
-                        {{ form_row(ProfilRestaurateurForm.RES_adresse, { value : restaurateurAdresse, label : "Adresse" }) }}
+                        {{ form_row(ProfilRestaurateurForm.RES_Nom, {  label : "Votre nom" }) }}
+                        {{ form_row(ProfilRestaurateurForm.RES_Prenom, { label : "Votre prénom:" }) }}
+                        {{ form_row(ProfilRestaurateurForm.RES_Mail, {  label : "Votre mail" }) }}
+                        {{ form_row(ProfilRestaurateurForm.RES_Telephone, {  label : "Numéro de téléphone" }) }}
+                        {{ form_row(ProfilRestaurateurForm.RES_adresse, { label : "Adresse" }) }}
                         
                         <button type="submit" class="btn btn-dark">Sauvegarder</button>
                     {{ form_end(ProfilRestaurateurForm) }}

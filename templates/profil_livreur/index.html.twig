@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfilLivreurController!{% endblock %}
+{% block title %}Profil Livreur{% endblock %}
 
 {% block navbaritems %}
-
+     <div class="navbar-nav">
+        <a class="nav-link active" href="/">Dashboard</a>
+        <a class="nav-link" href="/profil/livreur">Profil</a>
+    </div>
     <form>
         <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
     </form>
@@ -12,18 +15,50 @@
 
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="card mx-auto" style="width: 90rem; margin-top : 15px">
+  <div class="card-body">
+    <h5 class="card-title">Profil du Livreur</h5>
+        <div class="container">
+            <div class="row">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                <div class="col">
+     
+                    {{ form_start(ProfilLivreurForm) }}
+                        {{ form_row(ProfilLivreurForm.LI_Nom, {   label : "Votre nom" }) }}
+                        {{ form_row(ProfilLivreurForm.LI_Prenom, {  label : "Votre prénom:" }) }}
+                        {{ form_row(ProfilLivreurForm.LI_Mail, {  label : "Votre mail" }) }}
+                        {{ form_row(ProfilLivreurForm.LI_Telephone, {  label : "Numéro de téléphone" }) }}
+                        {{ form_row(ProfilLivreurForm.FK_VI, { label : "Ville" }) }}
+                         {{ form_row(ProfilLivreurForm.vehicules, { label : "Vehicule" }) }}
+                        <button type="submit" class="btn btn-dark">Sauvegarder</button>
+                    {{ form_end(ProfilLivreurForm) }}
+               
+                </div>
+                <div class="col">
+                </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/PC-Portable/Desktop/koalaeat/project/KoalaEat/src/Controller/ProfilLivreurController.php'|file_link(0) }}">src/Controller/ProfilLivreurController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/PC-Portable/Desktop/koalaeat/project/KoalaEat/templates/profil_livreur/index.html.twig'|file_link(0) }}">templates/profil_livreur/index.html.twig</a></code></li>
-    </ul>
+            </div>
+        </div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Nouveau Véhicule</h5>
+        <div class="container">
+            <div class="row">
+
+                <div class="col">
+     
+                    {{ form_start(VehiculeForm) }}
+                        {{ form_row(VehiculeForm.VE_Libelle, {   label : "Type de véhicule" }) }}
+                        {{ form_row(VehiculeForm.VE_Immatriculation, {  label : "Votre immatriculation" }) }}                     
+                        <button type="submit" class="btn btn-dark">Sauvegarder</button>
+                    {{ form_end(VehiculeForm) }}
+               
+                </div>
+                <div class="col">
+                </div>
+
+            </div>
+        </div>
+  </div>
 </div>
 {% endblock %}
