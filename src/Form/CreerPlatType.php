@@ -6,11 +6,9 @@ use App\Entity\Plat;
 use App\Entity\Restaurant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 class CreerPlatType extends AbstractType
 {
@@ -19,10 +17,19 @@ class CreerPlatType extends AbstractType
         $builder->add('PA_Libelle')
                 ->add('PA_Prix')
                 ->add('PA_Stock')
-                ->add('FK_RE', EntityType::class, array(
-                    'class' => Restaurant::class,
-                    'choices' => $options['restaurant']
-                ));
+                ->add('FK_RE',
+                    EntityType::class, 
+                    array(
+                        'class' => Restaurant::class,
+                        'choices' => $options['restaurant']
+                    )
+                )
+                ->add('estSupprime', 
+                    HiddenType::class,
+                    array(
+                        'data' => 0
+                    )
+                );
     }
     
     public function configureOptions(OptionsResolver $resolver): void
