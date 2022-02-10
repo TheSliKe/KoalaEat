@@ -27,6 +27,47 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
+    public function getCommande($client){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+                SELECT c.id as id, st.st_libelle as status, po.po_date as date FROM commande c
+                inner join possede po on po.fk_co_id = c.id
+                inner join status st on po.fk_st_id = st.id
+                Where c.fk_cl_id = :id and  po.po_date in ( select max(po.po_date) from possede po group by po.fk_co_id ) 
+                GROUP BY c.id, st.st_libelle, po.po_date;
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([':id' => $client]);
+        return $resultSet->fetchAllAssociative();
+
+        // $qb = $this->createQueryBuilder('c')
+        //             ->innerJoin(Possede::class, 'po')
+        //             ->addSelect("po")
+        //             ->where("c.FK_CL = :client")
+        //             ->groupBy("c.id , po.id")
+        //             ->setParameters([ 'client' => $client ])
+        //             ->getQuery();
+        
+        // $qb->execute();
+        // return $qb->getResult();
+    }
+
+    public function getCommandeEnCours($client){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+                SELECT c.id as id, st.st_libelle as status, po.po_date as date FROM commande c
+                inner join possede po on po.fk_co_id = c.id
+                inner join status st on po.fk_st_id = st.id
+                Where c.fk_cl_id = :id and  po.po_date in ( select max(po.po_date) from possede po group by po.fk_co_id ) AND st.st_libelle != "Livrée"
+                GROUP BY c.id, st.st_libelle, po.po_date;
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([':id' => $client]);
+        return $resultSet->fetchAllAssociative();
+        
+    }
     // /**
     //  * @return Collection[] Returns an array of Commande objects
     //  */
