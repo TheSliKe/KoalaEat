@@ -68,6 +68,56 @@ class CommandeRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
         
     }
+
+    public function getCommandeLivreurAcceptéParRestau($livreur){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            select c.id as id, 
+                re.re_adresse as restaurantAdresse, 
+                po.po_date as dateCommande, 
+                c.co_adresse_de_livraison as livraisonAdresse
+            FROM commande c
+            INNER JOIN possede po ON c.id = po.fk_co_id
+            LEFT JOIN restaurant re ON re.id = c.fk_restaurant_id
+            where po.fk_st_id = 2 
+            AND re.fk_vi_id_id = :idLivreurVille
+            AND po.po_date in (select max(possede.po_date) 
+            FROM possede 
+            group by possede.fk_co_id);
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([':idLivreurVille' => $livreur->getFKVI()->getId()]);
+        return $resultSet->fetchAllAssociative();
+        
+    }
+
+    public function getCommandeLivreurPriseEnCharge($livreur){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            select c.id as id, 
+                re.re_adresse as restaurantAdresse, 
+                po.po_date as dateCommande, 
+                c.co_adresse_de_livraison as livraisonAdresse,
+                st.st_libelle as status
+            FROM commande c
+            INNER JOIN possede po ON c.id = po.fk_co_id
+            LEFT JOIN restaurant re ON re.id = c.fk_restaurant_id
+            LEFT JOIN status st ON st.id = po.fk_st_id
+            where 
+                po.po_date in (select max(possede.po_date)
+                    from possede group by possede.fk_co_id)
+            AND fk_li_id = :idLivreur
+            AND po.fk_st_id IN (3, 4, 5, 6) ;
+        ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([':idLivreur' => $livreur->getId()]);
+        return $resultSet->fetchAllAssociative();
+        
+    }
+
     // /**
     //  * @return Collection[] Returns an array of Commande objects
     //  */

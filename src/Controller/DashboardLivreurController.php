@@ -8,47 +8,92 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Commande;
-use App\Entity\Restaurant;
+use App\Entity\Livreur;
 use App\Entity\Possede;
-use App\Entity\Plat;
+use App\Entity\Status;
 
 class DashboardLivreurController extends AbstractController
 {
     #[Route('/dashboard/livreur', name: 'dashboard_livreur')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $conn = $entityManager->getConnection();
-        $sql = '
-        select c.id as id, 
-                re.re_adresse as restaurantAdresse, 
-                po.po_date as dateCommande, 
-                c.co_adresse_de_livraison as livraisonAdresse
-            FROM commande c
-                INNER JOIN possede po ON c.id = po.fk_co_id
-                LEFT JOIN restaurant re ON re.id = c.fk_restaurant_id
-            where po.fk_st_id = 2 AND po.po_date in (select max(possede.po_date) from possede group by possede.fk_co_id); 
-            ';
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery();
-        $result = $resultSet->fetchAllAssociative();
+        $repositoryStatus = $entityManager->getRepository(Status::class);
+        $repositoryLivreur = $entityManager->getRepository(Livreur::class);
+        $livreur = $repositoryLivreur->find(1);
+
+        $repositoryCommande = $entityManager->getRepository(Commande::class);
+        $commandesAttentePrisEnCharge = $repositoryCommande->getCommandeLivreurAcceptéParRestau($livreur);
+        $commandesPrisEnCharge = $repositoryCommande->getCommandeLivreurPriseEnCharge($livreur);
+
+        if ($request->isMethod('post') && $request->request->get('prendreEnCharge') != null) {
+
+            $commandeToUpdateId = $request->request->get('prendreEnCharge');
+            $commandeToUpdate = $repositoryCommande->find($commandeToUpdateId);
+
+            $commandeToUpdate->setFKLI($livreur);
         
-        $sql2 = '
-        select c.id as id, 
-        re.re_adresse as restaurantAdresse, 
-        po.po_date as dateCommande, 
-        c.co_adresse_de_livraison as livraisonAdresse
-    FROM commande c
-        INNER JOIN possede po ON c.id = po.fk_co_id
-        LEFT JOIN restaurant re ON re.id = c.fk_restaurant_id
-    where po.fk_st_id = 5 AND po.fk_st_id = 6 AND po.po_date in (select max(possede.po_date) from possede group by possede.fk_co_id);
-            ';
-        $stmt2 = $conn->prepare($sql2);
-        $resultSet2 = $stmt2->executeQuery();
-        $result2 = $resultSet2->fetchAllAssociative();
+            $statusPrisEnCharge = $repositoryStatus->find(3);
+
+            $status = new Possede();
+            $status->setFKST($statusPrisEnCharge);
+            $status->setFKCO($commandeToUpdate);
+            $status->setPODate(new \DateTime('NOW'));
+
+        
+            
+            $entityManager->persist($commandeToUpdate);
+            $entityManager->persist($status);
+            $entityManager->flush();
+
+        }
+
+        if ($request->isMethod('post') && $request->request->get('commandeRecupere') != null) {
+
+            $commandeToUpdateId = $request->request->get('commandeRecupere');
+            $commandeToUpdate = $repositoryCommande->find($commandeToUpdateId);
+
+            $statusEnCoursDeLivraison = $repositoryStatus->find(6);
+
+            $status = new Possede();
+            $status->setFKST($statusEnCoursDeLivraison);
+            $status->setFKCO($commandeToUpdate);
+            $status->setPODate(new \DateTime('NOW'));
+
+        
+            
+            $entityManager->persist($commandeToUpdate);
+            $entityManager->persist($status);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('dashboard_livreur');
+
+        }
+
+        if ($request->isMethod('post') && $request->request->get('commandeLivre') != null) {
+
+            $commandeToUpdateId = $request->request->get('commandeLivre');
+            $commandeToUpdate = $repositoryCommande->find($commandeToUpdateId);
+
+            $statusEnCoursDeLivraison = $repositoryStatus->find(7);
+
+            $status = new Possede();
+            $status->setFKST($statusEnCoursDeLivraison);
+            $status->setFKCO($commandeToUpdate);
+            $status->setPODate(new \DateTime('NOW'));
+
+        
+            
+            $entityManager->persist($commandeToUpdate);
+            $entityManager->persist($status);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('dashboard_livreur');
+
+        }
 
         return $this->render('dashboard_livreur/index.html.twig', [
-            'commandes' => $result,
-            'commandesPreiseEnCharge' => $result2
+            'commandes' => $commandesAttentePrisEnCharge,
+            'commandesPreiseEnCharge' => $commandesPrisEnCharge
         ]);
     }
 }
