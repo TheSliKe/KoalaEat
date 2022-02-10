@@ -31,6 +31,7 @@ class DashboardLivreurController extends AbstractController
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
         $result = $resultSet->fetchAllAssociative();
+        
         $sql2 = '
         select c.id as id, 
         re.re_adresse as restaurantAdresse, 
