@@ -104,7 +104,7 @@
                                         </form>
                                         {% endif %}
                                     </td>
-                                    <td>18H45</td>
+                                    <td>{{ commande.po_date|date('d-m-Y H:i:s') }}</td>
                                 </tr>      
                             {% endfor %}                  
                         </tbody>
