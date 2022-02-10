@@ -32,4 +32,29 @@
         {% endfor %}
     </tbody>
 </table>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Date
+            </th>
+            <th>
+                Etat
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for statu in status %}
+            <tr>
+                <td>
+                    {{statu.st_libelle}}
+                </td>
+                <td>
+                    {{statu.po_date}}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
