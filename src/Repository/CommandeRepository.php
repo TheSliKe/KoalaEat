@@ -85,6 +85,50 @@ class CommandeRepository extends ServiceEntityRepository
     //         ->getResult();
     // }
     
+    public function getCommandeEtStatus($id) {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+                SELECT distinct
+                    commande.id as id, 
+                    status.st_libelle as st_libelle,
+                    possede.po_date as po_date,
+                    status.id as status_id
+                FROM commande 
+                INNER JOIN possede 
+                ON commande.id = possede.fk_co_id
+                LEFT JOIN status
+                ON status.id = possede.fk_st_id
+                Left JOIN restaurant
+                ON restaurant.id 
+                AND commande.fk_restaurant_id
+                WHERE commande.fk_restaurant_id = :id
+                AND status.id != 7
+                AND possede.po_date IN 
+                (
+                    SELECT max(possede.po_date) 
+                    FROM possede 
+                    GROUP BY possede.fk_co_id
+                )
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([':id' => $id]);
+        return $resultSet->fetchAllAssociative();
+    }
+    
+    
+    public function getCommandesDetailsLivreur($id){
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+                SELECT commande.* FROM commande 
+                LEFT JOIN compose ON compose.fk_co_id = commande.id
+                LEFT JOIN plat ON plat.id = compose.fk_pa_id
+                WHERE  plat.fk_re_id = :id
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([':id' => $id]);
+        return $resultSet->fetchAllAssociative();
+    }
+   
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */

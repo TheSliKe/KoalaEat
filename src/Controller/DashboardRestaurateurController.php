@@ -38,9 +38,6 @@ class DashboardRestaurateurController extends AbstractController
     #[Route('/dashboard/restaurant/view/{id}', name: 'dashboard_restaurant')]
     public function dashboard_restaurant(Request $request, EntityManagerInterface $entityManager, $id): Response
     {
-        $conn = $entityManager->getConnection();
-
-
         if($request->isMethod('post')){
             if($request->get('idCmd')){
                 if($request->get('NextState')){
@@ -81,33 +78,8 @@ class DashboardRestaurateurController extends AbstractController
             }
         }
 
-        $sql = '
-                SELECT distinct
-                    commande.id as id, 
-                    status.st_libelle as st_libelle,
-                    possede.po_date as po_date,
-                    status.id as status_id
-                FROM commande 
-                INNER JOIN possede 
-                ON commande.id = possede.fk_co_id
-                LEFT JOIN status
-                ON status.id = possede.fk_st_id
-                Left JOIN restaurant
-                ON restaurant.id 
-                AND commande.fk_restaurant_id
-                WHERE commande.fk_restaurant_id = :id
-                AND status.id != 7
-                AND possede.po_date IN 
-                (
-                    SELECT max(possede.po_date) 
-                    FROM possede 
-                    GROUP BY possede.fk_co_id
-                )
-            ';
-
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['id' => $id]);
-        $commandes = $resultSet->fetchAllAssociative();
+        $repositoryCommandes = $entityManager->getRepository(Commande::class);
+        $commandes = $repositoryCommandes->getCommandeEtStatus($id);
  
         $repositoryPlat = $entityManager->getRepository(Plat::class);
         $plats = $repositoryPlat->findBy(['FK_RE' => 1, 'estSupprime' => 0]);
@@ -120,7 +92,6 @@ class DashboardRestaurateurController extends AbstractController
     #[Route('/dashboard/restaurant/plat/{id}', name: 'dashboard_restaurant_edit')]
     public function edit_dashboard_restaurant(Request $request, EntityManagerInterface $entityManager, $id): Response
     {
-
         if($id==0){
             $plat = new Plat();
         } else {
@@ -129,14 +100,12 @@ class DashboardRestaurateurController extends AbstractController
         }
         $repositoryRestaurant = $entityManager->getRepository(Restaurant::class);
         $restaurants = $repositoryRestaurant->findBy(['FK_RES_id' => 1]);
-        
 
         $form1 = $this->createForm(
             CreerPlatType::class, 
             $plat,
             array('restaurant' => $restaurants)
         );
-
 
         $form1->handleRequest($request);
 
