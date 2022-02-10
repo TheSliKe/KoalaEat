@@ -1,0 +1,418 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition du Restaurant partie 2{% endblock %}
+
+
+{% block navbaritems %}
+
+    <div class="navbar-nav">
+        <a class="nav-link active" href="/dashboard/restaurateur">Dashboard</a>
+        <a class="nav-link" href="/profil/restaurateur">Profil</a>
+    </div>
+
+    <form>
+        <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
+    </form>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="card mx-auto mt-3" style="width: 60rem;">
+  <div class="card-body">
+    <h5 class="card-title">Ajouter les horaires de votre restaurant</h5>
+   
+    <form method="post">
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Jours</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Horaire Midi</th>
+                    <th scope="col">Horaire Soir</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <th scope="row" >lundi</th>
+                    <td>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeMidiLundi">
+                                Fermé le midi
+                                <input onchange="checkbox(1, 1, this)" class="form-check-input" type="checkbox" value="true" id="closeMidiLundi" name="closeMidiLundi" {% if horaireLundi.getHoraireDebutMidi() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeSoirLundi">
+                                Fermé le soir
+                                <input onchange="checkbox(1, 2, this)" class="form-check-input" type="checkbox" value="true" id="closeSoirLundi" name="closeSoirLundi" {% if horaireLundi.getHoraireDebutSoir() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireLundi.getHoraireDebutMidi()}}"{% endif %} name="lundi-start-midi" id="lundi-start-midi" aria-label="Ouverture" {% if horaireLundi.getHoraireDebutMidi() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireLundi.getHoraireFinMidi()}}"{% endif %} name="lundi-stop-midi" id="lundi-stop-midi" aria-label="Fermeture" {% if horaireLundi.getHoraireFinMidi() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireLundi.getHoraireDebutSoir()}}"{% endif %} name="lundi-start-soir" id="lundi-start-soir" aria-label="Ouverture" {% if horaireLundi.getHoraireDebutSoir() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireLundi.getHoraireFinSoir()}}"{% endif %} name="lundi-stop-soir" id="lundi-stop-soir" aria-label="Fermeture" {% if horaireLundi.getHoraireFinSoir() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">mardi</th>
+                    <td>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeMidiMardi">
+                                Fermé le midi
+                                <input class="form-check-input" onchange="checkbox(2, 1, this)" type="checkbox" value="true" id="closeMidiMardi" {% if horaireMardi.getHoraireDebutMidi() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeSoirMardi">
+                                Fermé le soir
+                                <input class="form-check-input" onchange="checkbox(2, 2, this)" type="checkbox" value="true" id="closeSoirMardi" {% if horaireMardi.getHoraireDebutSoir() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireMardi.getHoraireDebutMidi()}}"{% endif %} name="mardi-start-midi" id="mardi-start-midi" aria-label="Ouverture" {% if horaireMardi.getHoraireDebutMidi() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireMardi.getHoraireFinMidi()}}"{% endif %} name="mardi-stop-midi" id="mardi-stop-midi" aria-label="Fermeture" {% if horaireMardi.getHoraireFinMidi() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireMardi.getHoraireDebutSoir()}}"{% endif %} name="mardi-start-soir" id="mardi-start-soir" aria-label="Ouverture" {% if horaireMardi.getHoraireDebutSoir() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireMardi.getHoraireFinSoir()}}"{% endif %} name="mardi-stop-soir" id="mardi-stop-soir" aria-label="Fermeture" {% if horaireMardi.getHoraireFinSoir() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">mercredi</th>
+                    <td>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeMidiMercredi">
+                                Fermé le midi
+                                <input class="form-check-input" onchange="checkbox(3, 1, this)" type="checkbox" value="true" id="closeMidiMercredi" {% if horaireMercredi.getHoraireDebutMidi() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeSoirMercredi">
+                                Fermé le soir
+                                <input class="form-check-input" onchange="checkbox(3, 2, this)" type="checkbox" value="true" id="closeSoirMercredi" {% if horaireMercredi.getHoraireDebutSoir() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireMercredi.getHoraireDebutMidi()}}"{% endif %} name="mercredi-start-midi" id="mercredi-start-midi" aria-label="Ouverture" {% if horaireMercredi.getHoraireDebutMidi() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireMercredi.getHoraireFinMidi()}}"{% endif %} name="mercredi-stop-midi" id="mercredi-stop-midi" aria-label="Fermeture" {% if horaireMercredi.getHoraireFinMidi() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireMercredi.getHoraireDebutSoir()}}"{% endif %} name="mercredi-start-soir" id="mercredi-start-soir" aria-label="Ouverture" {% if horaireMercredi.getHoraireDebutSoir() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireMercredi.getHoraireFinSoir()}}"{% endif %} name="mercredi-stop-soir" id="mercredi-stop-soir" aria-label="Fermeture" {% if horaireMercredi.getHoraireFinSoir() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">jeudi</th>
+                    <td>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeMidiJeudi">
+                                Fermé le midi
+                                <input class="form-check-input" onchange="checkbox(4, 1, this)" type="checkbox" value="true" id="closeMidiJeudi" {% if horaireJeudi.getHoraireDebutMidi() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeSoirJeudi">
+                                Fermé le soir
+                                <input class="form-check-input" onchange="checkbox(4, 2, this)" type="checkbox" value="true" id="closeSoirJeudi" {% if horaireJeudi.getHoraireDebutSoir() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireJeudi.getHoraireDebutMidi()}}"{% endif %} name="jeudi-start-midi" id="jeudi-start-midi" aria-label="Ouverture" {% if horaireJeudi.getHoraireDebutMidi() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireJeudi.getHoraireFinMidi()}}"{% endif %} name="jeudi-stop-midi" id="jeudi-stop-midi" aria-label="Fermeture" {% if horaireJeudi.getHoraireFinMidi() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireJeudi.getHoraireDebutSoir()}}"{% endif %} name="jeudi-start-soir" id="jeudi-start-soir" aria-label="Ouverture" {% if horaireJeudi.getHoraireDebutSoir() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireJeudi.getHoraireFinSoir()}}"{% endif %} name="jeudi-stop-soir" id="jeudi-stop-soir" aria-label="Fermeture" {% if horaireJeudi.getHoraireFinSoir() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">vendredi</th>
+                    <td>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeMidiVendredi">
+                                Fermé le midi
+                                <input class="form-check-input" onchange="checkbox(5, 1, this)" type="checkbox" value="true" id="closeMidiVendredi" {% if horaireVendredi.getHoraireDebutMidi() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeSoirVendredi">
+                                Fermé le soir
+                                <input class="form-check-input" onchange="checkbox(5, 2, this)" type="checkbox" value="true" id="closeSoirVendredi" {% if horaireVendredi.getHoraireDebutSoir() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireVendredi.getHoraireDebutMidi()}}"{% endif %} name="vendredi-start-midi" id="vendredi-start-midi" aria-label="Ouverture" {% if horaireVendredi.getHoraireDebutMidi() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireVendredi.getHoraireFinMidi()}}"{% endif %} name="vendredi-stop-midi" id="vendredi-stop-midi" aria-label="Fermeture" {% if horaireVendredi.getHoraireFinMidi() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireVendredi.getHoraireDebutSoir()}}"{% endif %} name="vendredi-start-soir" id="vendredi-start-soir" aria-label="Ouverture" {% if horaireVendredi.getHoraireDebutSoir() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireVendredi.getHoraireFinSoir()}}"{% endif %} name="vendredi-stop-soir" id="vendredi-stop-soir" aria-label="Fermeture" {% if horaireVendredi.getHoraireFinSoir() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">samedi</th>
+                    <td>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeMidiSamedi">
+                                Fermé le midi
+                                <input class="form-check-input" onchange="checkbox(6, 1, this)" type="checkbox" value="true" id="closeMidiSamedi" {% if horaireSamedi.getHoraireDebutMidi() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeSoirSamedi">
+                                Fermé le soir
+                                <input class="form-check-input" onchange="checkbox(6, 2, this)" type="checkbox" value="true" id="closeSoirSamedi" {% if horaireSamedi.getHoraireDebutSoir() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireSamedi.getHoraireDebutMidi()}}"{% endif %} name="samedi-start-midi" id="samedi-start-midi" aria-label="Ouverture" {% if horaireSamedi.getHoraireDebutMidi() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireSamedi.getHoraireFinMidi()}}"{% endif %} name="samedi-stop-midi" id="samedi-stop-midi" aria-label="Fermeture" {% if horaireSamedi.getHoraireFinMidi() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireSamedi.getHoraireDebutSoir()}}"{% endif %} name="samedi-start-soir" id="samedi-start-soir" aria-label="Ouverture" {% if horaireSamedi.getHoraireDebutSoir() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireSamedi.getHoraireFinSoir()}}"{% endif %} name="samedi-stop-soir" id="samedi-stop-soir" aria-label="Fermeture" {% if horaireSamedi.getHoraireFinSoir() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">dimanche</th>
+                    <td>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeMidiDimanche">
+                                Fermé le midi
+                                <input class="form-check-input" onchange="checkbox(7, 1, this)" type="checkbox" value="true" id="closeMidiDimanche" {% if horaireDimanche.getHoraireDebutMidi() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="closeSoirDimanche">
+                                Fermé le soir
+                                <input class="form-check-input" onchange="checkbox(7, 2, this)" type="checkbox" value="true" id="closeSoirDimanche" {% if horaireDimanche.getHoraireDebutSoir() == "fermé" %}checked{% endif %}>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireDimanche.getHoraireDebutMidi()}}"{% endif %} name="dimanche-start-midi" id="dimanche-start-midi" aria-label="Ouverture" {% if horaireDimanche.getHoraireDebutMidi() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireDimanche.getHoraireFinMidi()}}"{% endif %} name="dimanche-stop-midi"  id="dimanche-stop-midi" aria-label="Fermeture" {% if horaireDimanche.getHoraireFinMidi() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="time" class="form-control" placeholder="Ouverture" {% if edit == true %}value="{{horaireDimanche.getHoraireDebutSoir()}}"{% endif %} name="dimanche-start-soir" id="dimanche-start-soir" aria-label="Ouverture" {% if horaireDimanche.getHoraireDebutSoir() == "fermé" %}disabled{% endif %}>
+                                <span class="input-group-text">-</span>
+                            <input type="time" class="form-control" placeholder="Fermeture" {% if edit == true %}value="{{horaireDimanche.getHoraireFinSoir()}}"{% endif %} name="dimanche-stop-soir" id="dimanche-stop-soir" aria-label="Fermeture" {% if horaireDimanche.getHoraireFinSoir() == "fermé" %}disabled{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-dark">Sauvegarder</button>
+
+    </form>
+  </div>
+</div>
+
+<script>
+
+function checkbox(jour, time, checkbox){
+
+    switch (jour) {
+    case 1:
+        if(time == 1){
+            if(checkbox.checked){
+                document.getElementById('lundi-start-midi').disabled = true;
+                document.getElementById('lundi-stop-midi').disabled = true;
+            } else {
+                document.getElementById('lundi-start-midi').disabled = false;
+                document.getElementById('lundi-stop-midi').disabled = false;
+            }
+        } else {
+            if(checkbox.checked){
+                document.getElementById('lundi-start-soir').disabled = true;
+                document.getElementById('lundi-stop-soir').disabled = true;
+            } else {
+                document.getElementById('lundi-start-soir').disabled = false;
+                document.getElementById('lundi-stop-soir').disabled = false;
+            }
+        }
+        break;
+    case 2:
+        if(time == 1){
+            if(checkbox.checked){
+                document.getElementById('mardi-start-midi').disabled = true;
+                document.getElementById('mardi-stop-midi').disabled = true;
+            } else {
+                document.getElementById('mardi-start-midi').disabled = false;
+                document.getElementById('mardi-stop-midi').disabled = false;
+            }
+        } else {
+            if(checkbox.checked){
+                document.getElementById('mardi-start-soir').disabled = true;
+                document.getElementById('mardi-stop-soir').disabled = true;
+            } else {
+                document.getElementById('mardi-start-soir').disabled = false;
+                document.getElementById('mardi-stop-soir').disabled = false;
+            }
+        }
+        break;
+    case 3:
+        if(time == 1){
+            if(checkbox.checked){
+                document.getElementById('mercredi-start-midi').disabled = true;
+                document.getElementById('mercredi-stop-midi').disabled = true;
+            } else {
+                document.getElementById('mercredi-start-midi').disabled = false;
+                document.getElementById('mercredi-stop-midi').disabled = false;
+            }
+        } else {
+            if(checkbox.checked){
+                document.getElementById('mercredi-start-soir').disabled = true;
+                document.getElementById('mercredi-stop-soir').disabled = true;
+            } else {
+                document.getElementById('mercredi-start-soir').disabled = false;
+                document.getElementById('mercredi-stop-soir').disabled = false;
+            }
+        }
+        break;
+    case 4:
+        if(time == 1){
+            if(checkbox.checked){
+                document.getElementById('jeudi-start-midi').disabled = true;
+                document.getElementById('jeudi-stop-midi').disabled = true;
+            } else {
+                document.getElementById('jeudi-start-midi').disabled = false;
+                document.getElementById('jeudi-stop-midi').disabled = false;
+            }
+        } else {
+            if(checkbox.checked){
+                document.getElementById('jeudi-start-soir').disabled = true;
+                document.getElementById('jeudi-stop-soir').disabled = true;
+            } else {
+                document.getElementById('jeudi-start-soir').disabled = false;
+                document.getElementById('jeudi-stop-soir').disabled = false;
+            }
+        }
+        break;
+    case 5:
+        if(time == 1){
+            if(checkbox.checked){
+                document.getElementById('vendredi-start-midi').disabled = true;
+                document.getElementById('vendredi-stop-midi').disabled = true;
+            } else {
+                document.getElementById('vendredi-start-midi').disabled = false;
+                document.getElementById('vendredi-stop-midi').disabled = false;
+            }
+        } else {
+            if(checkbox.checked){
+                document.getElementById('vendredi-start-soir').disabled = true;
+                document.getElementById('vendredi-stop-soir').disabled = true;
+            } else {
+                document.getElementById('vendredi-start-soir').disabled = false;
+                document.getElementById('vendredi-stop-soir').disabled = false;
+            }
+        }
+        break;
+    case 6:
+        if(time == 1){
+            if(checkbox.checked){
+                document.getElementById('samedi-start-midi').disabled = true;
+                document.getElementById('samedi-stop-midi').disabled = true;
+            } else {
+                document.getElementById('samedi-start-midi').disabled = false;
+                document.getElementById('samedi-stop-midi').disabled = false;
+            }
+        } else {
+            if(checkbox.checked){
+                document.getElementById('samedi-start-soir').disabled = true;
+                document.getElementById('samedi-stop-soir').disabled = true;
+            } else {
+                document.getElementById('samedi-start-soir').disabled = false;
+                document.getElementById('samedi-stop-soir').disabled = false;
+            }
+        }
+        break;
+    case 7:
+        if(time == 1){
+            if(checkbox.checked){
+                document.getElementById('dimanche-start-midi').disabled = true;
+                document.getElementById('dimanche-stop-midi').disabled = true;
+            } else {
+                document.getElementById('dimanche-start-midi').disabled = false;
+                document.getElementById('dimanche-stop-midi').disabled = false;
+            }
+        } else {
+            if(checkbox.checked){
+                document.getElementById('dimanche-start-soir').disabled = true;
+                document.getElementById('dimanche-stop-soir').disabled = true;
+            } else {
+                document.getElementById('dimanche-start-soir').disabled = false;
+                document.getElementById('dimanche-stop-soir').disabled = false;
+            }
+        }
+        break;
+    default:
+        console.log(`oups`);
+    }
+
+    
+}
+
+</script>
+
+{% endblock %}

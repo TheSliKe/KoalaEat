@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DetailCommandeController!{% endblock %}
+
+{% block body %}
+{{ form_start(DetailCommandeType) }}
+    {{form_row(DetailCommandeType.CO_AdresseDeLivraison ,{label: 'Adresse de livraison'})}}
+    {{form_row(DetailCommandeType.FK_LI ,{label: 'Livreur'})}}
+    {{form_row(DetailCommandeType.FK_CL ,{label: 'Client'})}}
+{{ form_end(DetailCommandeType) }}
+<table>
+    <thead>
+        <tr>
+            <th>
+                Libelle
+            </th>
+            <th>
+                Quantité
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>
+                    {{article.article.getPALibelle()}}
+                </td>
+                <td>
+                    {{article.compose.getCOQuantite()}}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
