@@ -1,0 +1,202 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Client{% endblock %}
+
+{% block customstylesheets %}
+    <style>
+        body {
+            background-image: url('../../images/backRest.jpg');
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
+
+{% block navbaritems %}
+
+    <div class="navbar-nav">
+        <a class="nav-link active" href="/dashboard/client">Dashboard</a>
+        <a class="nav-link" href="/profil/client">Profil</a>
+        <a class="nav-link" href="/client/commandeEnCours">Commandes</a>
+        <a class="nav-link" href="/client/historiqueCommande">Historiques des Commandes</a>
+    </div>
+
+    <form>
+        <button class="btn me-2" type="button" onclick='window.location.href = "/logout"' style="background-color: #9d3822; color: #FFFFFF">Déconnexion</button>
+    </form>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="card mx-auto" style="width: 90rem; margin-top : 15px">
+    <div class="card-body text-center">
+
+        <ul class="nav nav-tabs justify-content-center">
+
+            {% for restaurant in restaurants %}
+                <li class="nav-item" style="margin-right: 5px">
+                    {% if loop.index == 1 %}
+                    <a href="#{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" class="nav-link active" data-bs-toggle="tab">{{ restaurant.getRELibelle() }}</a>
+                    {% else %}
+                    <a href="#{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" class="nav-link" data-bs-toggle="tab">{{ restaurant.getRELibelle() }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            
+                
+        </ul>
+
+           
+        <div class="tab-content">
+
+            {% for restaurant in restaurants %}
+
+                {% if loop.index == 1 %}
+                <div class="tab-pane fade show active" id="{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}">
+                {% else %}
+                <div class="tab-pane fade" id="{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}">
+                {% endif %}
+                
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Plats</th>
+                                                <th scope="col">Prix</th>
+                                                <th scope="col">Quantite</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for plat in restaurant.getPlats() %}
+
+                                                <tr>
+                                                    <th>{{ plat.PALibelle }}</th>
+                                                    <th>{{ plat.PAPrix }}</th>
+                                                    <th><input id="{{plat.id}}" onchange="changementQuantite(this)" type="number" min='0' value="0" class="form col-8"></th>
+                                                    <th scope="col"><a class="btn btn-success" onclick="addPanier({{plat.id}})">Ajouter au panier</th>
+                                                </tr>
+
+                                            {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col">
+                                    <div class="card mt-3" style="width: 30rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Votre Panier</h5>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Plat</th>
+                                                        <th>Quantite</th>
+                                                        <th>Prix</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbodyPanier">
+                                                </tbody>
+                                                <tfooter>
+                                                    <tr id="tFooterPanier">
+                                                    </tr>
+                                                </tfooter>
+                                            </table>
+                                            <div>
+                                                <button class="btn btn-success" onClick="validerCommande()">Valider la commande</button>
+                                                <button class="btn btn-danger" onClick="annulerCommande()">Annuler la commande</button>
+                                            </div>
+                                        <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div> 
+<script type="text/javascript">
+$(document).ready(function(){
+     $.ajax({
+            url : '/panier',
+            type : "POST"
+        }).done(function(response){
+            remplirLeTableau(response)
+        })
+})
+    function addPanier(id){
+        data = {'id' : id,
+                'quantite' : $("#"+id).val()};
+        $.ajax({
+            url : '/panier/add',
+            type : "POST",
+            data : data
+        }).done(function(response){
+            remplirLeTableau(response)
+        })
+    }
+
+    function changementQuantite(quantite){
+        console.log(quantite.id)
+    }
+
+    function remplirLeTableau(response){
+            $("#tbodyPanier").empty();
+            $("#tFooterPanier").empty();
+            total = 0;
+            response.forEach(function(element){
+                console.log(element)
+                total += element.Quantite * element.Prix
+                html = "<tr>" +
+                "<th>" + element.Plat + "</th>" +
+                "<th>" + element.Quantite + "</th>" +
+                "<th>" + element.Prix + "</th>" +
+                "<th><button class='btn btn-danger' value='"+ element.id+"' onClick='deletePlat(\""+ element.id + "\")'>Delete</button>" 
+                "</tr>";
+
+                $("#tbodyPanier").append(html);
+            })
+            footer = "<tr>"+
+                        "<th></th>" +
+                        "<th> Total : </th>" +
+                        "<th>"+ total + "€</th>" +
+                    "</tr>";
+            $("#tFooterPanier").append("<th>"+ footer+"</th>");
+    }
+
+    function deletePlat(id){
+        data = { 'id' : id }
+        $.ajax({
+            url : '/panier/remove',
+            type : "POST",
+            data : data
+        }).done(function(response){
+            remplirLeTableau(response)
+        })
+    }
+
+    function validerCommande(){
+       $.ajax({
+            url : '/panier/valider',
+            type : "POST"
+        }).done(function(response){
+            remplirLeTableau(response)
+        })
+    }
+    
+    function annulerCommande(){
+        $.ajax({
+            url : '/panier/vider',
+            type : "POST"
+        }).done(function(response){
+            remplirLeTableau(response)
+        })
+    }
+</script>
+{% endblock %}

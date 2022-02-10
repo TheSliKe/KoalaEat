@@ -6,6 +6,7 @@ use App\Entity\Client;
 use App\Entity\Commande;
 use App\Entity\Compose;
 use App\Entity\Plat;
+use App\Entity\Restaurant;
 use App\Form\ProfilClientType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,7 +87,6 @@ class ProfilClientController extends AbstractController
 
         $repoCommande = $entityManager->getRepository(Commande::class);
         $repoCompose = $entityManager->getRepository(Compose::class);
-        $repoPlat = $entityManager->getRepository(Plat::class);
 
 
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {  
@@ -105,12 +105,22 @@ class ProfilClientController extends AbstractController
                     'Restaurant' => $restaurant->getRELibelle(),
                     ]);
             }
-            // $plats = $repoCompose->getPlats();
-            // $jsonData = array();
             $jsonData = $info;  
             return new JsonResponse($jsonData); 
          } else { 
             return $this->render('commandes_client/historique_commandes.html.twig'); 
          }
+    }
+
+    #[Route('/dashboard/client', name: 'dashboardClient')]
+    public function dashboardClient(EntityManagerInterface $entityManager) : Response
+    {
+        $repoRestaurant = $entityManager->getRepository(Restaurant::class);
+        $restaurants = $repoRestaurant->findAll();
+        // $plats = $restaurants->getPlats();
+
+        return $this->render('dashboard_client/index.html.twig', [
+            'restaurants' => $restaurants
+        ]);
     }
 }
