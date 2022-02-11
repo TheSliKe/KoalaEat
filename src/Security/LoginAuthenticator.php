@@ -53,11 +53,11 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $user = $token->getUser();
 
         if($user->getAccountType() == 1){
-            return new RedirectResponse($this->urlGenerator->generate('profil_client'));
+            return new RedirectResponse($this->urlGenerator->generate('dashboardClient'));
         } elseif ($user->getAccountType() == 2) {
             return new RedirectResponse($this->urlGenerator->generate('dashboard_restaurateur'));
         } elseif ($user->getAccountType() == 3) {
-            return new RedirectResponse($this->urlGenerator->generate('profil_livreur'));
+            return new RedirectResponse($this->urlGenerator->generate('dashboard_livreur'));
         } else {
             return new RedirectResponse($this->urlGenerator->generate('app_login'));
         }

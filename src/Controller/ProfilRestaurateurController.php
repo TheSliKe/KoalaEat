@@ -69,7 +69,8 @@ class ProfilRestaurateurController extends AbstractController
 
         return $this->render('profil_restaurateur/index.html.twig', [
             'ProfilRestaurateurForm' => $form1->createView(), 
-            'listeRestaurant' => $listeRestaurant
+            'listeRestaurant' => $listeRestaurant,
+            'backgroundImg' => "restaurateur"
         ]);
     }
 
@@ -96,7 +97,8 @@ class ProfilRestaurateurController extends AbstractController
         }
 
         return $this->render('edition_restaurant/restaurant.html.twig', [                
-            'CreerRestaurantType' => $form->createView()
+            'CreerRestaurantType' => $form->createView(),
+            'backgroundImg' => "restaurateur"
         ]);
     }
 
@@ -322,7 +324,8 @@ class ProfilRestaurateurController extends AbstractController
         }
         
         return $this->render('edition_restaurant/horaire.html.twig', [
-            'edit'=> false
+            'edit'=> false,
+            'backgroundImg' => "restaurateur"
         ]);
     }
 
@@ -347,7 +350,8 @@ class ProfilRestaurateurController extends AbstractController
         }
 
         return $this->render('edition_restaurant/restaurant.html.twig', [                
-            'CreerRestaurantType' => $form->createView()
+            'CreerRestaurantType' => $form->createView(),
+            'backgroundImg' => "restaurateur"
         ]);
     }
 
@@ -557,7 +561,8 @@ class ProfilRestaurateurController extends AbstractController
             'horaireVendredi' => $horaireRestaurantvendredi,
             'horaireSamedi' => $horaireRestaurantsamedi,
             'horaireDimanche' => $horaireRestaurantdimanche,
-            'edit'=> true
+            'edit'=> true,
+            'backgroundImg' => "restaurateur"
         ]);
     }
 

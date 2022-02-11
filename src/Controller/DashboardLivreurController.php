@@ -94,7 +94,8 @@ class DashboardLivreurController extends AbstractController
 
         return $this->render('dashboard_livreur/index.html.twig', [
             'commandes' => $commandesAttentePrisEnCharge,
-            'commandesPreiseEnCharge' => $commandesPrisEnCharge
+            'commandesPreiseEnCharge' => $commandesPrisEnCharge,
+            'backgroundImg' => "livreur"
         ]);
     }
 }

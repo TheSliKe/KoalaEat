@@ -31,7 +31,8 @@ class DashboardRestaurateurController extends AbstractController
         
         return $this->render('dashboard_restaurateur/index.html.twig', [
             'controller_name' => 'DashboardRestaurateurController',
-            'listeRestaurant' => $listeRestaurant
+            'listeRestaurant' => $listeRestaurant,
+            'backgroundImg' => "restaurateur"
         ]);
     }
 
@@ -88,7 +89,8 @@ class DashboardRestaurateurController extends AbstractController
         $plats = $repositoryPlat->findBy(['FK_RE' => 1, 'estSupprime' => 0]);
         return $this->render('dashboard_restaurant/index.html.twig', [
             'plats' => $plats,
-            'commandes' => $commandes
+            'commandes' => $commandes,
+            'backgroundImg' => "restaurateur"
         ]);
     }
 
@@ -120,6 +122,7 @@ class DashboardRestaurateurController extends AbstractController
         return $this->render('dashboard_restaurant_edit/index.html.twig', [
             'creerPlatType' => $form1->createView(),
             'plats' => $plat,
+            'backgroundImg' => "restaurateur"
         ]);
     }
 }

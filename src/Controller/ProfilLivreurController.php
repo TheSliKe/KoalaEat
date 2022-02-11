@@ -46,7 +46,8 @@ class ProfilLivreurController extends AbstractController
             'ProfilLivreurForm'=> $form->createView(),
             'VehiculeForm' => $form1->createView(),
             'user'=> $user,
-            'livreur' => $livreur
+            'livreur' => $livreur,
+            'backgroundImg' => "livreur"
         ]);
     }
 }

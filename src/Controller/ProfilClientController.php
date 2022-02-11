@@ -44,7 +44,8 @@ class ProfilClientController extends AbstractController
         return $this->render('profil_client/index.html.twig', [
             'ProfilClientForm' => $form1->createView(), 
             'user' => $user,
-            'client' => $client
+            'client' => $client,
+            'backgroundImg' => "client"
         ]);
 
     }
@@ -61,7 +62,8 @@ class ProfilClientController extends AbstractController
 
 
         return $this->render('commandes_client/commande_en_cours.html.twig', [
-            'commandes' => $commandes
+            'commandes' => $commandes,
+            'backgroundImg' => "client"
         ]);
     }
 
@@ -76,7 +78,8 @@ class ProfilClientController extends AbstractController
         $commandes = $repoCommande->getCommande($client->getId());
 
         return $this->render('commandes_client/historique_commandes.html.twig', [
-            'commandes' => $commandes
+            'commandes' => $commandes,
+            'backgroundImg' => "client"
         ]);
     }
 
@@ -108,7 +111,9 @@ class ProfilClientController extends AbstractController
             $jsonData = $info;  
             return new JsonResponse($jsonData); 
          } else { 
-            return $this->render('commandes_client/historique_commandes.html.twig'); 
+            return $this->render('commandes_client/historique_commandes.html.twig', [
+                'backgroundImg' => "client"
+            ]); 
          }
     }
 
@@ -120,7 +125,8 @@ class ProfilClientController extends AbstractController
         // $plats = $restaurants->getPlats();
 
         return $this->render('dashboard_client/index.html.twig', [
-            'restaurants' => $restaurants
+            'restaurants' => $restaurants,
+            'backgroundImg' => "client"
         ]);
     }
 }

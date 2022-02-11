@@ -26,7 +26,8 @@ class DetailCommandeController extends AbstractController
             'commande' => $commande,
             'plats' => $plats,
             'controller_name' => 'DetailCommandeController', 
-            'statusList' => $status
+            'statusList' => $status,
+            'backgroundImg' => "restaurateur"
         ]);
     }
 }

@@ -2,21 +2,6 @@
 
 {% block title %}Profil Restaurateur{% endblock %}
 
-{% block customstylesheets %}
-    <style>
-        body {
-            background-image: url('../images/backRestaurateur.jpg');
-            background-size: cover;
-            background-position: 50% 60%;
-        }
-        .nav-link {
-            
-            color: black;
-        }
-
-    </style>
-{% endblock %}
-
 {% block navbaritems %}
 
     <div class="navbar-nav">
@@ -31,9 +16,6 @@
 {% endblock %}
 
 {% block body %}
-
-
-
 
 <div class="card mx-auto" style="width: 90rem; margin-top : 15px">
   <div class="card-body">
@@ -71,9 +53,9 @@
             {% for restaurant in listeRestaurant %}
                 <li class="nav-item" style="margin-right: 5px">
                     {% if loop.index == 1 %}
-                    <a href="#{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" class="nav-link active" data-bs-toggle="tab">{{ restaurant.getRELibelle() }}</a>
+                    <a href="#{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" class="nav-link active" data-bs-toggle="tab" style=" color: black;">{{ restaurant.getRELibelle() }}</a>
                     {% else %}
-                    <a href="#{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" class="nav-link" data-bs-toggle="tab">{{ restaurant.getRELibelle() }}</a>
+                    <a href="#{{ (restaurant.getRELibelle() ~ loop.index)|replace({' ': ''}) }}" class="nav-link" data-bs-toggle="tab" style=" color: black;">{{ restaurant.getRELibelle() }}</a>
                     {% endif %}
                 </li>
             {% endfor %}
