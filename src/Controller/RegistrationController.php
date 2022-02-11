@@ -43,31 +43,40 @@ class RegistrationController extends AbstractController
 
             if ($accountType == 1) {
 
+                $user->setRoles(array("client"));
+
                 $client = new Client();
                 $client->setCLMail($form->get('email')->getData());
                 $client->setFKUS($user);
 
                 $entityManager->persist($client);
+                $entityManager->persist($user);
                 $entityManager->flush();
 
                 return $this->redirectToRoute('app_login');
             } elseif ($accountType == 2) {
+
+                $user->setRoles(array("restaurateur"));
 
                 $restaurateur = new Restaurateur();
                 $restaurateur->setRESMail($form->get('email')->getData());
                 $restaurateur->setFKUS($user);
                 
                 $entityManager->persist($restaurateur);
+                $entityManager->persist($user);
                 $entityManager->flush();
 
                 return $this->redirectToRoute('app_login');
             } elseif ($accountType == 3) {
+
+                $user->setRoles(array("livreur"));
 
                 $livreur = new Livreur();
                 $livreur->setLIMail($form->get('email')->getData());
                 $livreur->setFKUS($user);
                 
                 $entityManager->persist($livreur);
+                $entityManager->persist($user);
                 $entityManager->flush();
 
                 return $this->redirectToRoute('app_login');
