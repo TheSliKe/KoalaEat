@@ -43,7 +43,7 @@ class RegistrationController extends AbstractController
 
             if ($accountType == 1) {
 
-                $user->setRoles(array("client"));
+                $user->setRoles(array("ROLE_CLIENT"));
 
                 $client = new Client();
                 $client->setCLMail($form->get('email')->getData());
@@ -56,7 +56,7 @@ class RegistrationController extends AbstractController
                 return $this->redirectToRoute('app_login');
             } elseif ($accountType == 2) {
 
-                $user->setRoles(array("restaurateur"));
+                $user->setRoles(array("ROLE_RESTAURATEUR"));
 
                 $restaurateur = new Restaurateur();
                 $restaurateur->setRESMail($form->get('email')->getData());
@@ -69,7 +69,7 @@ class RegistrationController extends AbstractController
                 return $this->redirectToRoute('app_login');
             } elseif ($accountType == 3) {
 
-                $user->setRoles(array("livreur"));
+                $user->setRoles(array("ROLE_LIVREUR"));
 
                 $livreur = new Livreur();
                 $livreur->setLIMail($form->get('email')->getData());

@@ -63,7 +63,7 @@
                                         <tbody>
 
                                             {% for plat in restaurant.getPlats() %}
-                                                {% if plat.PAStock > 0 %}
+                                                {% if plat.PAStock > 0 and plat.estSupprime == 0 %}
                                                 <tr>
                                                     <th>{{ plat.PALibelle }}</th>
                                                     <th>{{ plat.PAPrix }}</th>

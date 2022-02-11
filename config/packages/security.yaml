@@ -35,10 +35,20 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/dashboard$, roles: ROLE_USER }
-    - { path: ^/profil/restaurateur$, roles: ROLE_USER }
-    # - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    # - { path: ^/register$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+     - { path: ^/profil/livreur, roles: ROLE_LIVREUR }
+     - { path: ^/dashboard/livreur, roles: ROLE_LIVREUR }
+     - { path: ^/profil/client, roles: ROLE_CLIENT }
+     - { path: ^/dashboard/client, roles: ROLE_CLIENT }
+     - { path: ^/client, roles: ROLE_CLIENT }
+     - { path: ^/dashboard/restaurateur, roles: ROLE_RESTAURATEUR }
+     - { path: ^/profil/restaurateur, roles: ROLE_RESTAURATEUR }
+
+    #- { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    #- { path: ^/register$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+  
+  
+
 when@test:
   security:
     password_hashers:
@@ -51,3 +61,5 @@ when@test:
         cost: 4 # Lowest possible value for bcrypt
         time_cost: 3 # Lowest possible value for argon
         memory_cost: 10 # Lowest possible value for argon
+    
+
