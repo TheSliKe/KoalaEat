@@ -7,6 +7,7 @@ use App\Entity\Commande;
 use App\Entity\Compose;
 use App\Entity\Plat;
 use App\Entity\Possede;
+use App\Entity\Restaurant;
 use App\Entity\Status;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,11 +29,13 @@ class PanierController extends AbstractController
             $plats = $session->get("panier");
             foreach ($plats as $pl) {
                 $platSelection = $repoPlat->find($pl['id']);
+                $restaurant = $platSelection->getFKRE();
                 array_push($info, [
                     "id" => $pl['id'],
                     "Plat" => $platSelection->getPALibelle(),
                     "Quantite" => $pl['quantite'],
-                    "Prix" => $platSelection->getPAPrix()
+                    "Prix" => $platSelection->getPAPrix(),
+                    "RestaurantId" => $restaurant->getId()
                 ]);
             }
             return new JsonResponse($info); 
@@ -68,11 +71,13 @@ class PanierController extends AbstractController
 
             foreach ($plats as $pl) {
                 $platSelection = $repoPlat->find($pl['id']);
+                $restaurant = $platSelection->getFKRE();
                 array_push($info, [
                     "id" => $pl['id'],
                     "Plat" => $platSelection->getPALibelle(),
                     "Quantite" => $pl['quantite'],
-                    "Prix" => $platSelection->getPAPrix()
+                    "Prix" => $platSelection->getPAPrix(),
+                    "RestaurantId" => $restaurant->getId()
                 ]);
             }
             return new JsonResponse($info); 
@@ -105,11 +110,13 @@ class PanierController extends AbstractController
 
             foreach ($plats as $pl) {
                 $platSelection = $repoPlat->find($pl['id']);
+                $restaurant = $platSelection->getFKRE();
                 array_push($info, [
                     "id" => $pl['id'],
                     "Plat" => $platSelection->getPALibelle(),
                     "Quantite" => $pl['quantite'],
-                    "Prix" => $platSelection->getPAPrix()
+                    "Prix" => $platSelection->getPAPrix(),
+                    "RestaurantId" => $restaurant->getId()
                 ]);
             }
             return new JsonResponse($info); 
@@ -134,7 +141,11 @@ class PanierController extends AbstractController
     public function validerPanier(SessionInterface $session, Request $request, EntityManagerInterface $entityManager) : Response
     {   
         $user_id = $this->getUser();
-
+        $restaurantId = $_POST['restaurantId'];
+        
+        $repository = $entityManager->getRepository(Restaurant::class);
+        $restaurant = $repository->find($restaurantId); 
+        
         $repository = $entityManager->getRepository(Client::class);
         $client = $repository->findOneBy(['FK_US' => $user_id]); 
         
@@ -150,6 +161,7 @@ class PanierController extends AbstractController
             $commande = new Commande();
             $commande->setFKCL($client);
             $commande->setCOAdresseDeLivraison($client->getCLAdresse());
+            $commande->setFkRestaurant($restaurant);
             $entityManager->persist($commande);
 
             //Inserer Possede
@@ -162,14 +174,13 @@ class PanierController extends AbstractController
             foreach ($panier as $pl) {
             //Inserer dans Compose
                $plat = $repoPlat->find($pl['id']);
-
-               $compose = new Compose();
-               $compose->setFKPA($plat);
-               $compose->setFKCO($commande);
-               $compose->setCOQuantite($pl['quantite']);
-               
-               $restaurant = $plat->getFKRE();
-               $entityManager->persist($compose);
+                if ($plat->getFKRE() ==  $restaurant) {
+                    $compose = new Compose();
+                    $compose->setFKPA($plat);
+                    $compose->setFKCO($commande);
+                    $compose->setCOQuantite($pl['quantite']);
+                    $entityManager->persist($compose);
+                }
             }
 
             $commande->setFkRestaurant($restaurant);

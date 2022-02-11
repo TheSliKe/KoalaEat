@@ -68,7 +68,7 @@
                                                     <th>{{ plat.PALibelle }}</th>
                                                     <th>{{ plat.PAPrix }}</th>
                                                     <th><input id="{{plat.id}}" onchange="changementQuantite(this)" type="number" min='0' value="0" class="form col-8"></th>
-                                                    <th scope="col"><a class="btn btn-success" onclick="addPanier({{plat.id}})">Ajouter au panier</th>
+                                                    <th scope="col"><a class="btn btn-dark" onclick="addPanier({{plat.id}},{{restaurant.id}})">Ajouter au panier</th>
                                                 </tr>
 
                                             {% endfor %}
@@ -89,15 +89,16 @@
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="tbodyPanier">
+                                                
+                                                <tbody id="tbodyPanier{{restaurant.id}}">
                                                 </tbody>
                                                 <tfooter>
-                                                    <tr id="tFooterPanier">
+                                                    <tr id="tFooterPanier{{restaurant.id}}">
                                                     </tr>
                                                 </tfooter>
                                             </table>
                                             <div>
-                                                <button class="btn btn-success" onClick="validerCommande()">Valider la commande</button>
+                                                <button class="btn btn-dark" onClick="validerCommande({{restaurant.id}})">Valider la commande</button>
                                                 <button class="btn btn-danger" onClick="annulerCommande()">Annuler la commande</button>
                                             </div>
                                         <div>
@@ -123,7 +124,8 @@ $(document).ready(function(){
 })
     function addPanier(id){
         data = {'id' : id,
-                'quantite' : $("#"+id).val()};
+                'quantite' : $("#"+id).val()
+                };
         $.ajax({
             url : '/panier/add',
             type : "POST",
@@ -138,27 +140,52 @@ $(document).ready(function(){
     }
 
     function remplirLeTableau(response){
-            $("#tbodyPanier").empty();
-            $("#tFooterPanier").empty();
-            total = 0;
+            total = [];
+            restaurant = [];
             response.forEach(function(element){
-                console.log(element)
-                total += element.Quantite * element.Prix
+                $("#tbodyPanier"+element.RestaurantId).empty();
+                $("#tFooterPanier"+element.RestaurantId).empty();
+            })
+
+            response.forEach(function(element){
+                
+                total.push({ "prix" :  element.Quantite * element.Prix,
+                            "restaurant" : element.RestaurantId })
                 html = "<tr>" +
                 "<th>" + element.Plat + "</th>" +
-                "<th>" + element.Quantite + "</th>" +
-                "<th>" + element.Prix + "</th>" +
+                "<th id='quantite"+element.RestaurantId+"'>" + element.Quantite + "</th>" +
+                "<th id='prix'"+element.RestaurantId+">" + element.Prix + "</th>" +
                 "<th><button class='btn btn-danger' value='"+ element.id+"' onClick='deletePlat(\""+ element.id + "\")'>Delete</button>" 
                 "</tr>";
 
-                $("#tbodyPanier").append(html);
+                $("#tbodyPanier"+element.RestaurantId).append(html);
+
             })
-            footer = "<tr>"+
-                        "<th></th>" +
-                        "<th> Total : </th>" +
-                        "<th>"+ total + "€</th>" +
-                    "</tr>";
-            $("#tFooterPanier").append("<th>"+ footer+"</th>");
+
+            total.forEach(function(el){
+                console.log(el);
+                if(restaurant.length <= 0){
+                    restaurant.push(el.restaurant)
+                }else if(restaurant.includes(el.restaurant)){
+                    console.log('valeur Existe');
+                }else{
+                    restaurant.push(el.restaurant)
+                }
+            })
+
+            restaurant.forEach(function(res){
+                $totalRestau = 0;
+                total.forEach(function(tot){
+                    if(tot.restaurant == res){
+                        $totalRestau += tot.prix;
+                    }
+                    $("#tFooterPanier"+res).html(
+                       "<th></th>"+
+                       "<th>Total : </th>"+
+                       "<th>"+ $totalRestau+"<span class='small'>(+3€ de livraison)</span></th>"
+                    );
+                })
+            })
     }
 
     function deletePlat(id){
@@ -172,10 +199,12 @@ $(document).ready(function(){
         })
     }
 
-    function validerCommande(){
+    function validerCommande(restaurant){
+        data = { "restaurantId" : restaurant}
        $.ajax({
             url : '/panier/valider',
-            type : "POST"
+            type : "POST",
+            data : data
         }).done(function(response){
             remplirLeTableau(response)
         })
