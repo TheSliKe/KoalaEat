@@ -122,7 +122,6 @@ class ProfilClientController extends AbstractController
     {
         $repoRestaurant = $entityManager->getRepository(Restaurant::class);
         $restaurants = $repoRestaurant->findAll();
-        // $plats = $restaurants->getPlats();
 
         return $this->render('dashboard_client/index.html.twig', [
             'restaurants' => $restaurants,

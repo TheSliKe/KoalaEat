@@ -105,9 +105,9 @@
                 quantiteTotal += element.Quantite
                 html = "<tr>" +
                 "<th>" + element.Libelle + "</th>" +
-                "<th>" + element.Prix + "</th>" +
+                "<th>" + element.Prix + "€</th>" +
                 "<th>" + element.Quantite + "</th>" +
-                "<th>" +  prixTotal + "</th>" +
+                "<th>" +  prixTotal + "€</th>" +
                 "<th>" + element.Restaurant +"</th>" +
                 "</tr>";
                 total = total + prixTotal;
@@ -116,7 +116,7 @@
             footer = "<th></th>"+
                     "<th>Total : </th>" +
                     "<th>" + quantiteTotal + "</th>"+
-                    "<th>" + total + "</th>"
+                    "<th>" + total + "€</th>"
             $("#trFooter").append(footer);
         })
     };

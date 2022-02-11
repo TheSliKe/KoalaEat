@@ -174,12 +174,16 @@ class PanierController extends AbstractController
             foreach ($panier as $pl) {
             //Inserer dans Compose
                $plat = $repoPlat->find($pl['id']);
-                if ($plat->getFKRE() ==  $restaurant) {
+               if ($plat->getFKRE() ==  $restaurant) {
+                    $oldStock = $plat->getPAStock();
+                    $newQuantite = $plat->setPAStock($oldStock - $pl['quantite']);
+
                     $compose = new Compose();
                     $compose->setFKPA($plat);
                     $compose->setFKCO($commande);
                     $compose->setCOQuantite($pl['quantite']);
                     $entityManager->persist($compose);
+                    $entityManager->persist($newQuantite);
                 }
             }
 

@@ -63,14 +63,14 @@
                                         <tbody>
 
                                             {% for plat in restaurant.getPlats() %}
-
+                                                {% if plat.PAStock > 0 %}
                                                 <tr>
                                                     <th>{{ plat.PALibelle }}</th>
                                                     <th>{{ plat.PAPrix }}</th>
-                                                    <th><input id="{{plat.id}}" onchange="changementQuantite(this)" type="number" min='0' value="0" class="form col-8"></th>
-                                                    <th scope="col"><a class="btn btn-dark" onclick="addPanier({{plat.id}},{{restaurant.id}})">Ajouter au panier</th>
+                                                    <th><input id="{{plat.id}}" onchange="changementQuantite(this, {{plat.PAStock}})" type="number" min='0' max="{{plat.PAStock}}" value="0" class="form col-8"></th>
+                                                    <th scope="col"><a class="btn btn-dark" id='ajouterPlat{{plat.id}}' onclick="addPanier({{plat.id}},{{restaurant.id}})">Ajouter au panier</th>
                                                 </tr>
-
+                                                {% endif %}
                                             {% endfor %}
 
                                         </tbody>
@@ -115,6 +115,9 @@
 </div> 
 <script type="text/javascript">
 $(document).ready(function(){
+    $("[type='number']").keypress(function (evt) {
+        evt.preventDefault();
+    });
      $.ajax({
             url : '/panier',
             type : "POST"
@@ -135,8 +138,8 @@ $(document).ready(function(){
         })
     }
 
-    function changementQuantite(quantite){
-        console.log(quantite.id)
+    function changementQuantite(quantite, $stock){
+        console.log(quantite.value)
     }
 
     function remplirLeTableau(response){
@@ -206,7 +209,7 @@ $(document).ready(function(){
             type : "POST",
             data : data
         }).done(function(response){
-            remplirLeTableau(response)
+            location.reload();
         })
     }
     
@@ -215,7 +218,7 @@ $(document).ready(function(){
             url : '/panier/vider',
             type : "POST"
         }).done(function(response){
-            remplirLeTableau(response)
+            location.reload();
         })
     }
 </script>
