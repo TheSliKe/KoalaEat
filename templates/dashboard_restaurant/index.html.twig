@@ -122,12 +122,13 @@
                     <h5 class="modal-title" id="addPlatModallabel">Supprimer un plat</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body text-center">
                     <form action="" method="post">
                         <input type="hidden" name="idPlat" value="{{plat.id}}">
-                        <input type="submit" value="Supprimer">
+                         <button type="submit" class="btn btn-danger mt-3">Supprimer le plat</button>
                     </form>
+                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Valider</button>
                 </div>
             </div>
         </div>

@@ -17,25 +17,31 @@
 
 {% block body %}
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-               {{ form_start(creerPlatType) }}
-                    <div class="modal-body">
-                        {{ form_row(creerPlatType.PA_Libelle, {label : "Nom :"}) }}
-                        {{ form_row(creerPlatType.PA_Prix, {label : "Prix :"}) }}
-                        {{ form_row(creerPlatType.PA_Stock, {label : "Stock :"}) }}
-                        {{ form_row(creerPlatType.FK_RE, {label : "Restaurant :"}) }}
-                        {{ form_row(creerPlatType.estSupprime) }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="submit" class="btn btn-dark">Sauvegarder</button>
-                    </div>
-               {{ form_end(creerPlatType) }}
-        </div>
+<div class="card mx-auto mt-4" style="width: 70rem;">
+    <div class="card-body">
+
+        {{ form_start(creerPlatType) }}
+            <div class="modal-body">
+                {{ form_row(creerPlatType.PA_Libelle, {label : "Nom :"}) }}
+                {{ form_row(creerPlatType.PA_Prix, {label : "Prix :"}) }}
+                {{ form_row(creerPlatType.PA_Stock, {label : "Stock :"}) }}
+                {{ form_row(creerPlatType.FK_RE, {label : "Restaurant :"}) }}
+                {{ form_row(creerPlatType.estSupprime) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-dark">Sauvegarder</button>
+            </div>
+        {{ form_end(creerPlatType) }}
+
     </div>
 </div>
 
+
+
+
+
+              
+     
 
 {% endblock %}

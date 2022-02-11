@@ -18,10 +18,12 @@ class DashboardLivreurController extends AbstractController
     #[Route('/dashboard/livreur', name: 'dashboard_livreur')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user_id = $this->getUser();
+
         $repositoryStatus = $entityManager->getRepository(Status::class);
         $repositoryLivreur = $entityManager->getRepository(Livreur::class);
-        $livreur = $repositoryLivreur->find(1);
-
+        $livreur = $repositoryLivreur->findOneBy(['FK_US' => $user_id]);
+        
         $repositoryCommande = $entityManager->getRepository(Commande::class);
         $commandesAttentePrisEnCharge = $repositoryCommande->getCommandeLivreurAcceptéParRestau($livreur);
         $commandesPrisEnCharge = $repositoryCommande->getCommandeLivreurPriseEnCharge($livreur);
