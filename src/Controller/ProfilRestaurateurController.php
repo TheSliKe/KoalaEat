@@ -184,12 +184,12 @@ class ProfilRestaurateurController extends AbstractController
             $horaireRestaurantlundi->setFKSEM($lundi);
             if ($fermerLundiMidi == "true" || $fermerLundiSoir == "true"){
                 if ($fermerLundiMidi == "true"){
-                    $horaireRestaurantlundi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantlundi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantlundi->setHoraireDebutMidi("");
+                    $horaireRestaurantlundi->setHoraireFinMidi("");
                 }
                 if ($fermerLundiSoir == "true"){
-                    $horaireRestaurantlundi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantlundi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantlundi->setHoraireDebutSoir("");
+                    $horaireRestaurantlundi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantlundi->setHoraireDebutMidi($lundiStartMidi);
@@ -204,12 +204,12 @@ class ProfilRestaurateurController extends AbstractController
             $horaireRestaurantmardi->setFKSEM($mardi);
             if ($fermerMardiMidi == "true" || $fermerMardiSoir == "true"){
                 if ($fermerMardiMidi == "true"){
-                    $horaireRestaurantmardi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantmardi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantmardi->setHoraireDebutMidi("");
+                    $horaireRestaurantmardi->setHoraireFinMidi("");
                 }
                 if ($fermerMardiSoir == "true"){
-                    $horaireRestaurantmardi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantmardi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantmardi->setHoraireDebutSoir("");
+                    $horaireRestaurantmardi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantmardi->setHoraireDebutMidi($mardiStartMidi);
@@ -223,12 +223,12 @@ class ProfilRestaurateurController extends AbstractController
             $horaireRestaurantmercredi->setFKSEM($mercredi);
             if ($fermerMercrediMidi == "true" || $fermerMercrediSoir == "true"){
                 if ($fermerMercrediMidi == "true"){
-                    $horaireRestaurantmercredi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantmercredi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantmercredi->setHoraireDebutMidi("");
+                    $horaireRestaurantmercredi->setHoraireFinMidi("");
                 }
                 if ($fermerMercrediSoir == "true"){
-                    $horaireRestaurantmercredi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantmercredi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantmercredi->setHoraireDebutSoir("");
+                    $horaireRestaurantmercredi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantmercredi->setHoraireDebutMidi($mercrediStartMidi);
@@ -243,12 +243,12 @@ class ProfilRestaurateurController extends AbstractController
             $horaireRestaurantjeudi->setFKSEM($jeudi);
             if ($fermerJeudiMidi == "true" || $fermerJeudiSoir == "true"){
                 if ($fermerJeudiMidi == "true"){
-                    $horaireRestaurantjeudi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantjeudi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantjeudi->setHoraireDebutMidi("");
+                    $horaireRestaurantjeudi->setHoraireFinMidi("");
                 }
                 if ($fermerJeudiSoir == "true"){
-                    $horaireRestaurantjeudi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantjeudi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantjeudi->setHoraireDebutSoir("");
+                    $horaireRestaurantjeudi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantjeudi->setHoraireDebutMidi($jeudiStartMidi);
@@ -263,12 +263,12 @@ class ProfilRestaurateurController extends AbstractController
             $horaireRestaurantvendredi->setFKSEM($vendredi);
             if ($fermerVendrediMidi == "true" || $fermerVendrediSoir == "true"){
                 if ($fermerVendrediMidi == "true"){
-                    $horaireRestaurantvendredi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantvendredi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantvendredi->setHoraireDebutMidi("");
+                    $horaireRestaurantvendredi->setHoraireFinMidi("");
                 }
                 if ($fermerVendrediSoir == "true"){
-                    $horaireRestaurantvendredi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantvendredi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantvendredi->setHoraireDebutSoir("");
+                    $horaireRestaurantvendredi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantvendredi->setHoraireDebutMidi($vendrediStartMidi);
@@ -283,12 +283,12 @@ class ProfilRestaurateurController extends AbstractController
             $horaireRestaurantsamedi->setFKSEM($samedi);
             if ($fermerSamediMidi == "true" || $fermerSamediSoir == "true"){
                 if ($fermerSamediMidi == "true"){
-                    $horaireRestaurantsamedi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantsamedi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantsamedi->setHoraireDebutMidi("");
+                    $horaireRestaurantsamedi->setHoraireFinMidi("");
                 }
                 if ($fermerSamediSoir == "true"){
-                    $horaireRestaurantsamedi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantsamedi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantsamedi->setHoraireDebutSoir("");
+                    $horaireRestaurantsamedi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantsamedi->setHoraireDebutMidi($samediStartMidi);
@@ -302,12 +302,12 @@ class ProfilRestaurateurController extends AbstractController
             $horaireRestaurantdimanche->setFKSEM($dimanche);
             if ($fermerDimancheMidi == "true" || $fermerDimancheSoir == "true"){
                 if ($fermerDimancheMidi == "true"){
-                    $horaireRestaurantdimanche->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantdimanche->setHoraireFinMidi("fermé");
+                    $horaireRestaurantdimanche->setHoraireDebutMidi("");
+                    $horaireRestaurantdimanche->setHoraireFinMidi("");
                 }
                 if ($fermerDimancheSoir == "true"){
-                    $horaireRestaurantdimanche->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantdimanche->setHoraireFinSoir("fermé");
+                    $horaireRestaurantdimanche->setHoraireDebutSoir("");
+                    $horaireRestaurantdimanche->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantdimanche->setHoraireDebutMidi($dimancheStartMidi);
@@ -424,12 +424,12 @@ class ProfilRestaurateurController extends AbstractController
 
             if ($fermerLundiMidi == "true" || $fermerLundiSoir == "true"){
                 if ($fermerLundiMidi == "true"){
-                    $horaireRestaurantlundi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantlundi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantlundi->setHoraireDebutMidi("");
+                    $horaireRestaurantlundi->setHoraireFinMidi("");
                 }
                 if ($fermerLundiSoir == "true"){
-                    $horaireRestaurantlundi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantlundi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantlundi->setHoraireDebutSoir("");
+                    $horaireRestaurantlundi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantlundi->setHoraireDebutMidi($lundiStartMidi);
@@ -441,12 +441,12 @@ class ProfilRestaurateurController extends AbstractController
 
             if ($fermerMardiMidi == "true" || $fermerMardiSoir == "true"){
                 if ($fermerMardiMidi == "true"){
-                    $horaireRestaurantmardi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantmardi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantmardi->setHoraireDebutMidi("");
+                    $horaireRestaurantmardi->setHoraireFinMidi("");
                 }
                 if ($fermerMardiSoir == "true"){
-                    $horaireRestaurantmardi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantmardi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantmardi->setHoraireDebutSoir("");
+                    $horaireRestaurantmardi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantmardi->setHoraireDebutMidi($mardiStartMidi);
@@ -459,12 +459,12 @@ class ProfilRestaurateurController extends AbstractController
 
             if ($fermerMercrediMidi == "true" || $fermerMercrediSoir == "true"){
                 if ($fermerMercrediMidi == "true"){
-                    $horaireRestaurantmercredi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantmercredi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantmercredi->setHoraireDebutMidi("");
+                    $horaireRestaurantmercredi->setHoraireFinMidi("");
                 }
                 if ($fermerMercrediSoir == "true"){
-                    $horaireRestaurantmercredi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantmercredi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantmercredi->setHoraireDebutSoir("");
+                    $horaireRestaurantmercredi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantmercredi->setHoraireDebutMidi($mercrediStartMidi);
@@ -477,12 +477,12 @@ class ProfilRestaurateurController extends AbstractController
 
             if ($fermerJeudiMidi == "true" || $fermerJeudiSoir == "true"){
                 if ($fermerJeudiMidi == "true"){
-                    $horaireRestaurantjeudi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantjeudi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantjeudi->setHoraireDebutMidi("");
+                    $horaireRestaurantjeudi->setHoraireFinMidi("");
                 }
                 if ($fermerJeudiSoir == "true"){
-                    $horaireRestaurantjeudi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantjeudi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantjeudi->setHoraireDebutSoir("");
+                    $horaireRestaurantjeudi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantjeudi->setHoraireDebutMidi($jeudiStartMidi);
@@ -495,12 +495,12 @@ class ProfilRestaurateurController extends AbstractController
             
             if ($fermerVendrediMidi == "true" || $fermerVendrediSoir == "true"){
                 if ($fermerVendrediMidi == "true"){
-                    $horaireRestaurantvendredi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantvendredi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantvendredi->setHoraireDebutMidi("");
+                    $horaireRestaurantvendredi->setHoraireFinMidi("");
                 }
                 if ($fermerVendrediSoir == "true"){
-                    $horaireRestaurantvendredi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantvendredi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantvendredi->setHoraireDebutSoir("");
+                    $horaireRestaurantvendredi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantvendredi->setHoraireDebutMidi($vendrediStartMidi);
@@ -513,12 +513,12 @@ class ProfilRestaurateurController extends AbstractController
 
             if ($fermerSamediMidi == "true" || $fermerSamediSoir == "true"){
                 if ($fermerSamediMidi == "true"){
-                    $horaireRestaurantsamedi->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantsamedi->setHoraireFinMidi("fermé");
+                    $horaireRestaurantsamedi->setHoraireDebutMidi("");
+                    $horaireRestaurantsamedi->setHoraireFinMidi("");
                 }
                 if ($fermerSamediSoir == "true"){
-                    $horaireRestaurantsamedi->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantsamedi->setHoraireFinSoir("fermé");
+                    $horaireRestaurantsamedi->setHoraireDebutSoir("");
+                    $horaireRestaurantsamedi->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantsamedi->setHoraireDebutMidi($samediStartMidi);
@@ -531,12 +531,12 @@ class ProfilRestaurateurController extends AbstractController
 
             if ($fermerDimancheMidi == "true" || $fermerDimancheSoir == "true"){
                 if ($fermerDimancheMidi == "true"){
-                    $horaireRestaurantdimanche->setHoraireDebutMidi("fermé");
-                    $horaireRestaurantdimanche->setHoraireFinMidi("fermé");
+                    $horaireRestaurantdimanche->setHoraireDebutMidi("");
+                    $horaireRestaurantdimanche->setHoraireFinMidi("");
                 }
                 if ($fermerDimancheSoir == "true"){
-                    $horaireRestaurantdimanche->setHoraireDebutSoir("fermé");
-                    $horaireRestaurantdimanche->setHoraireFinSoir("fermé");
+                    $horaireRestaurantdimanche->setHoraireDebutSoir("");
+                    $horaireRestaurantdimanche->setHoraireFinSoir("");
                 }
             } else {
                 $horaireRestaurantdimanche->setHoraireDebutMidi($dimancheStartMidi);
