@@ -8,7 +8,7 @@
         <a class="nav-link" href="/dashboard/client">Dashboard</a>
         <a class="nav-link" href="/profil/client">Profil</a>
         <a class="nav-link active" href="/client/commandeEnCours">Commandes</a>
-        <a class="nav-link" href="/client/historiqueCommande">Historiques des Commandes</a>
+        <a class="nav-link" href="/client/historiqueCommande">Historique des Commandes</a>
     </div>
 
     <form>
@@ -40,7 +40,7 @@
                                     <th> {{ commande.id }} </th>
                                     <th> {{ commande.status }} </th>
                                     <th> {{ commande.date }} </th>
-                                    <th><a class="btn btn-primary" onclick="details({{ commande.id}});">Details<a></th>
+                                    <th><a class="btn btn-dark" onclick="details({{ commande.id}});">Details<a></th>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -55,7 +55,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Details Commande</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
