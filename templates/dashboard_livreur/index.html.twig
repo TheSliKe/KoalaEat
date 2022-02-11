@@ -44,7 +44,7 @@
                                     <td>
 
                                     <form method="post" id="prendreEnCharge">
-                                        <button typoe="submit" class="btn btn-primary">Prendre la commande</button>
+                                        <button typoe="submit" class="btn btn-dark">Prendre la commande</button>
                                         <input type="hidden" name="prendreEnCharge" value="{{ commande.id }}"/>
                                     </form>
 
@@ -87,14 +87,14 @@
                                     {% if commandePriseEnCharge.status == "Prête à être expédié" %}
 
                                     <form method="post" id="commandeRecupere">
-                                        <button typoe="submit" class="btn btn-primary">Commande récuperée</button>
+                                        <button typoe="submit" class="btn btn-dark">Commande récuperée</button>
                                         <input type="hidden" name="commandeRecupere" value="{{ commandePriseEnCharge.id }}"/>
                                     </form>
 
                                     {% elseif commandePriseEnCharge.status == "En cours de livraison" %}
 
                                     <form method="post" id="commandeLivre">
-                                        <button typoe="submit" class="btn btn-primary">Commande livrée</button>
+                                        <button typoe="submit" class="btn btn-outline-success">Commande livrée</button>
                                         <input type="hidden" name="commandeLivre" value="{{ commandePriseEnCharge.id }}"/>
                                     </form>
 
