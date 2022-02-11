@@ -75,7 +75,7 @@ class DashboardRestaurateurController extends AbstractController
         if($request->isMethod('post')){
             if($request->get('idPlat')){
                 $repositoryPlat = $entityManager->getRepository(Plat::class);
-                $plat = $repositoryPlat->findOneBy(['id' => $_POST['idPlat']]);
+                $plat = $repositoryPlat->findOneBy(['id' => $request->get('idPlat')]);
                 $plat->setEstSupprime(true);
                 $entityManager->persist($plat);
                 $entityManager->flush();
@@ -86,7 +86,7 @@ class DashboardRestaurateurController extends AbstractController
         $commandes = $repositoryCommandes->getCommandeEtStatus($id);
  
         $repositoryPlat = $entityManager->getRepository(Plat::class);
-        $plats = $repositoryPlat->findBy(['FK_RE' => 1, 'estSupprime' => 0]);
+        $plats = $repositoryPlat->findBy(['FK_RE' => $id, 'estSupprime' => 0]);
         return $this->render('dashboard_restaurant/index.html.twig', [
             'plats' => $plats,
             'commandes' => $commandes,

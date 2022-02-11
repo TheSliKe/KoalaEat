@@ -21,7 +21,9 @@
                     label: 'Type de compte'
                 }) }}
 
-            {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_row(registrationForm.agreeTerms,{
+                label: "Accepter les conditions"
+            }) }}
            
             <button type="submit" class="btn btn-dark">S'inscrire</button>
             <button type="button" onclick='window.location.href = "/login"' class="btn btn-light">Se connecter</button>
