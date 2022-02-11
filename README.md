@@ -31,7 +31,7 @@ composer install
   php bin/console doctrine:migrations:migrate
   ``` 
 * Utiliser la base de donnée en ligne rien a modifier les login sont les suivants : 
-    * Client : client@gmail.com mdp -> client
+    * Client : client@gmail.com -> client
     * Restaurateur : restaurateur@gmail.com -> restaurateur
     * Livreur : livreur@gmail.com -> livreur
   
