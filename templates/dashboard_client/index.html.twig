@@ -54,9 +54,9 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Plats</th>
+                                                <th scope="col">Plat</th>
                                                 <th scope="col">Prix</th>
-                                                <th scope="col">Quantite</th>
+                                                <th scope="col">Quantité</th>
                                                 <th scope="col"></th>
                                             </tr>
                                         </thead>
@@ -158,7 +158,7 @@ $(document).ready(function(){
                 "<th>" + element.Plat + "</th>" +
                 "<th id='quantite"+element.RestaurantId+"'>" + element.Quantite + "</th>" +
                 "<th id='prix'"+element.RestaurantId+">" + element.Prix + "</th>" +
-                "<th><button class='btn btn-danger' value='"+ element.id+"' onClick='deletePlat(\""+ element.id + "\")'>Delete</button>" 
+                "<th><button class='btn btn-danger' value='"+ element.id+"' onClick='deletePlat(\""+ element.id + "\")'>Supprimer</button>" 
                 "</tr>";
 
                 $("#tbodyPanier"+element.RestaurantId).append(html);

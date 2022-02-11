@@ -50,7 +50,7 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($client);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('profil_client');
+                return $this->redirectToRoute('app_login');
             } elseif ($accountType == 2) {
 
                 $restaurateur = new Restaurateur();
@@ -60,7 +60,7 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($restaurateur);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('profil_restaurateur');
+                return $this->redirectToRoute('app_login');
             } elseif ($accountType == 3) {
 
                 $livreur = new Livreur();
@@ -70,7 +70,7 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($livreur);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('profil_livreur');
+                return $this->redirectToRoute('app_login');
             } else {
                 return $this->redirectToRoute('app_register');
             }
